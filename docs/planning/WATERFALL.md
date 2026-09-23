@@ -1,6 +1,6 @@
 # AVP Tutor — Waterfall development plan
 
-Version 1.0 · 2026-09-23 · Working baseline, open to user amendments
+Version 1.1 · 2026-09-23 · Working baseline, open to user amendments
 
 This plan distinguishes delivered software from proposed development. Phase order is deliberate: establish evidence and requirements before building learner models, then validate learning outcomes before adaptive policy promotion or fine-tuning. Phase gates are project milestones, not requests for permission to complete work already authorized.
 
@@ -56,7 +56,7 @@ Prior verification: 79 backend tests and 15 local browser/client tests; GitHub C
 | R12 | Make profiles optional and controllable | Consent, access, export/reset/deletion | Opt-out works without persistent profiling; owner isolation tested |
 | R13 | Reproduce experiments | Run manifests and reports | Same source/model/harness/settings/assessment versions identifiable |
 
-Requirements can be amended through `NOTES.md` and `CHANGELOG.md`. The user has not yet specified presentation date, hardware budget, student age group, study size, hosting target, or team role assignments.
+Requirements can be amended through `NOTES.md` and `CHANGELOG.md`. User notes now target April 2027, mention a potential dedicated RTX 5090, and propose eventual expansion to hundreds of algorithms while starting small. Hardware purchase, exact scope, student age group, study size, hosting target and role assignments remain open.
 
 ## 4. Waterfall phases and gates
 
@@ -190,7 +190,11 @@ A useful M1 can ship before research personalization. Production authentication 
 
 Alternatives considered: fixed learner-style classification lacks a suitable evidence basis; direct online weight updates are hard to audit; importing all tutoring dialogue into runtime RAG mixes pedagogy with domain facts; a fixed strong tutor remains an essential baseline and potential release choice.
 
-## 7. Change management and user notes
+## 7. Proposed uncertainty-aware escalation (CR-002)
+
+See [UNCERTAINTY_ROUTING.md](UNCERTAINTY_ROUTING.md) for the local-to-API routing experiment. It separates failure prediction from recovery benefit, verifies probability telemetry before using entropy, compares multiple uncertainty/verifier signals, and starts in shadow mode. This is proposed research; the live application still has provider-error fallback only. No new cloud routing or model instrumentation is enabled by this plan.
+
+## 8. Change management and user notes
 
 Add ideas freely in [NOTES.md](NOTES.md). Notes are proposed inputs, not implemented features. For each accepted change, add a `CR-###` entry to [CHANGELOG.md](CHANGELOG.md), identify affected requirements/phases, assess data/API/evaluation impact, update scope and plan version, and reopen only the relevant gates. Preserve previous decisions and reasons; never rewrite a historical result as if a later feature existed then.
 
