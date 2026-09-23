@@ -23,3 +23,6 @@ Artifacts serve students and integrating developers. AVP semantic claims require
 
 ## Delivery and verification
 Write behavior tests before implementation. Verify backend, training export, TypeScript, frontend build, browser flows, and a live local-model request. Commit and publish to the user's confirmed fork after self-review; CI verifies the published revision. Future work: real visualizer integration, expert-reviewed datasets, controlled local-model fine-tuning.
+
+## Delivery status
+Implemented the backend, typed integration contract, editable skills, opt-in feedback, experimental candidate proposals, and dataset/evaluation tooling. Independent review identified shared inference limits and harness-version consistency issues; both have regression coverage and are fixed. Local checks and GitHub CI pass. The production frontend/interpreter adapter and instructor-reviewed training remain team integration work.

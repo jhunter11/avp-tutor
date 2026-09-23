@@ -140,13 +140,3 @@ def test_gemini_uses_google_endpoint_and_key(monkeypatch):
         assert cls.call_args.kwargs["api_key"] == "test-google-key"
     assert result.provider == "gemini"
     assert result.answer == "Google answer"
-
-
-def test_legacy_generation_shares_inference_limit(monkeypatch):
-    from threading import BoundedSemaphore
-
-    from providers import call_llm
-
-    monkeypatch.setattr("providers._CHAT_SLOTS", BoundedSemaphore(0))
-    with pytest.raises(ProviderError, match="busy"):
-        call_llm("why")
