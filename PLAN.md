@@ -26,3 +26,6 @@ Write behavior tests before implementation. Verify backend, training export, Typ
 
 ## Delivery status
 Implemented the backend, typed integration contract, editable skills, opt-in feedback, experimental candidate proposals, and dataset/evaluation tooling. Independent review identified shared inference limits and harness-version consistency issues; both have regression coverage and are fixed. Local checks and GitHub CI pass. The production frontend/interpreter adapter and instructor-reviewed training remain team integration work.
+
+## Expanded development roadmap
+The current authoritative roadmap is [docs/planning/WATERFALL.md](docs/planning/WATERFALL.md). The implementation plan above describes the delivered foundation. User additions belong in [docs/planning/NOTES.md](docs/planning/NOTES.md), with accepted changes recorded separately.

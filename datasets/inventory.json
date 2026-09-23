@@ -1,0 +1,54 @@
+{
+  "acquired_on": "2026-09-23",
+  "raw_files_location": "artifacts/public-datasets (gitignored)",
+  "sources": [
+    {
+      "id": "mathdial",
+      "scope": "Full published train/test JSONL; teacher dialogue with simulated students",
+      "verified_files": 3,
+      "bytes": 9045822,
+      "record_counts": {
+        "mathdial/data/train.jsonl": 2262,
+        "mathdial/data/test.jsonl": 599
+      },
+      "training_approved": false
+    },
+    {
+      "id": "oatutor",
+      "scope": "25 lexicographically selected problem bundles, all JSON files within each; not representative or full corpus",
+      "verified_files": 84,
+      "bytes": 66753,
+      "record_counts": {},
+      "training_approved": false
+    },
+    {
+      "id": "mrbench",
+      "scope": "MRBench V2 evaluation data and annotation guideline",
+      "verified_files": 3,
+      "bytes": 1763328,
+      "record_counts": {
+        "mrbench/MRBench/MRBench_V2.json": {
+          "top_level_type": "list",
+          "top_level_entries": 200
+        }
+      },
+      "training_approved": false
+    },
+    {
+      "id": "csedm",
+      "scope": "Documentation only; interaction archive requires DataShop account",
+      "verified_files": 1,
+      "bytes": 20470,
+      "record_counts": {},
+      "training_approved": false
+    },
+    {
+      "id": "ednet",
+      "scope": "Documentation only; full interaction archives deferred due to scale and separate research use",
+      "verified_files": 1,
+      "bytes": 24298,
+      "record_counts": {},
+      "training_approved": false
+    }
+  ]
+}

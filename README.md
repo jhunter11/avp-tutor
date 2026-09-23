@@ -42,6 +42,12 @@ npm run dev
 
 Open http://localhost:5173. The model is configurable; `qwen3:8b` is a starting point, not a claim of best tutoring quality for your hardware. The visualization works without model inference, but the backend must be running.
 
+## Development plan and public teaching data
+
+See the [Waterfall plan](docs/planning/WATERFALL.md) for implemented versus planned capabilities, requirements, phase gates, acceptance criteria, and release scope. Add ideas to [the notes inbox](docs/planning/NOTES.md); accepted changes are tracked in the [change register](docs/planning/CHANGELOG.md).
+
+The [public teaching-data collection](datasets/README.md) includes reproducible, checksum-verified downloads and explicit acquisition limits. It is research material, separate from live RAG and approved AVP training.
+
 ## Skills and harness engineering
 
 Edit teaching skills in `harness/skills/`, retrieval policy in `harness/configs/baseline.json`, and grounded context assembly in `tutor/service.py`. Optional consented feedback links ratings to the exact answer/context and harness version. A candidate proposer can scaffold experiments without modifying the active tutor. See [the harness guide](docs/harness.md). Non-use is recorded separately and never automatically interpreted as a bad answer.
