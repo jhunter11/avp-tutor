@@ -6,7 +6,6 @@ from unittest.mock import MagicMock, patch
 import pytest
 from starlette.testclient import TestClient
 
-
 MOCK_RETRIEVE_RESULT = [
     {
         "score": 0.95,
@@ -32,6 +31,7 @@ def client():
     env = {
         "ANTHROPIC_API_KEY": "fake-key-for-testing",
         "LLM_PROVIDER": "anthropic",
+        "ANTHROPIC_MODEL": "test-model",
     }
 
     with (
@@ -39,8 +39,8 @@ def client():
         patch("generate.call_llm", return_value=MOCK_LLM_OUTPUT),
         patch.dict(os.environ, env),
     ):
-        from api.main import app
         from api.dependencies import limiter as original_limiter
+        from api.main import app
 
         # Reset the original limiter's counters — the @limiter.limit() decorators
         # captured this instance at import time, so replacing app.state.limiter

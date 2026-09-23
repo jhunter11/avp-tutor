@@ -26,7 +26,11 @@ class CodeStructureVisitor(PseudocodeVisitor):
         func_name = ctx.ID().getText()  # type: ignore[union-attr]
 
         # Extract parameters if they exist
-        params = [p.ID().getText() for p in ctx.paramList().annotatedParam()] if ctx.paramList() else []  # type: ignore[union-attr,misc]
+        params = (
+            [p.ID().getText() for p in ctx.paramList().annotatedParam()]
+            if ctx.paramList()
+            else []
+        )  # type: ignore[union-attr,misc]
 
         # Get the full source text of this function for the LLM to read later
         input_stream = ctx.start.getInputStream()  # type: ignore[union-attr]
@@ -46,6 +50,16 @@ class CodeStructureVisitor(PseudocodeVisitor):
 
 
 def parse_file(file_path, source_file=None):
+    from pathlib import Path
+
+    from tutor.validation import validate_avp
+
+    validation = validate_avp(Path(file_path).read_text())
+    if not validation.syntax_valid:
+        raise ValueError(
+            "Invalid AVP source: "
+            + "; ".join(d.message for d in validation.diagnostics)
+        )
     lexer = PseudocodeLexer(FileStream(file_path))
     parser = PseudocodeParser(CommonTokenStream(lexer))
 
@@ -86,7 +100,9 @@ if __name__ == "__main__":
 
     # Detect changed files
     print(f"\nScanning {data_folder} for .avp files...")
-    changed_files, unchanged_files, deleted_files = detect_changed_files(data_folder, metadata)
+    changed_files, unchanged_files, deleted_files = detect_changed_files(
+        data_folder, metadata
+    )
 
     _print_file_list("Changed files", changed_files)
     _print_file_list("Unchanged files", unchanged_files)
@@ -102,7 +118,9 @@ if __name__ == "__main__":
     all_code_chunks = []
     if existing_chunks:
         print(f"\nPreserving {len(existing_chunks)} existing chunks...")
-        all_code_chunks = [c for c in existing_chunks if c.get("source_file") not in excluded_files]
+        all_code_chunks = [
+            c for c in existing_chunks if c.get("source_file") not in excluded_files
+        ]
         print(f"Preserved {len(all_code_chunks)} chunks from unchanged files.")
 
     # Process changed files
@@ -120,7 +138,9 @@ if __name__ == "__main__":
                 function_names = [chunk["name"] for chunk in chunks]
                 metadata = update_metadata(metadata, full_path, function_names)
 
-                print(f"    Extracted {len(chunks)} function(s): {', '.join(function_names)}")
+                print(
+                    f"    Extracted {len(chunks)} function(s): {', '.join(function_names)}"
+                )
             except Exception as e:
                 failed_files.append((full_path, str(e)))
                 print(f"    ERROR: Failed to parse {filename}: {e}")

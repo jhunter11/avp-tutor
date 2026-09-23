@@ -1,140 +1,176 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
+import { readFileSync } from "node:fs";
+const demo = JSON.parse(
+  readFileSync(new URL("./fixtures/demo.json", import.meta.url), "utf8"),
+);
 
-/**
- * CI-safe E2E tests that intercept all /api/* calls at the network layer.
- * No backend required — Vite dev server serves the React app, and
- * page.route() returns canned JSON responses.
- */
-
-const HEALTH_OK = {
-  status: "ok",
-  retriever_loaded: true,
-  provider_configured: true,
-};
-
-const GENERATE_OK = {
-  generated_code: "fun addNumbers(a, b):\n    return a + b\nend fun",
-  retrieved_functions: [
+const reply = {
+  answer: "The value 4 is saved in key while larger values shift right.",
+  sources: [
     {
-      score: 0.95,
-      function_name: "addNumbers",
-      parameters: ["a", "b"],
-      code: "fun addNumbers(a, b):\n    return a + b\nend fun",
+      id: "insertion-sort:saved-key",
+      title: "Insertion sort",
+      section: "Saved key",
+      path: "knowledge/insertion-sort.md",
+      text: "The saved key is kept separately during shifts.",
     },
   ],
-  cached: false,
+  warnings: [],
+  context_status: "provided",
+  provider: "ollama",
+  model: "test-model",
+  latency_ms: 150,
+  fallback_used: false,
 };
 
-/** Install default route mocks (health OK, generate OK). */
-async function mockApi(page: import("@playwright/test").Page) {
+async function mockApi(page: Page) {
   await page.route("**/api/health", (route) =>
-    route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(HEALTH_OK) }),
+    route.fulfill({
+      json: {
+        provider_configured: true,
+        provider: "ollama",
+        model: "test-model",
+      },
+    }),
   );
-  await page.route("**/api/generate", (route) =>
-    route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(GENERATE_OK) }),
+  await page.route("**/api/demo/insertion-sort?*", (route) =>
+    route.fulfill({ json: demo }),
   );
+  await page.route("**/api/tutor", (route) => route.fulfill({ json: reply }));
 }
 
-test.describe("AVP RAG Chat (mocked)", () => {
-  test("page loads with UI elements", async ({ page }) => {
-    await mockApi(page);
-    await page.goto("/");
-    await expect(page.getByText("AVP RAG Chat")).toBeVisible();
-    await expect(page.getByPlaceholder("Ask me to generate AVP code...")).toBeVisible();
-    await expect(page.getByRole("button", { name: "Send" })).toBeVisible();
+test.beforeEach(async ({ page }) => {
+  await mockApi(page);
+  await page.goto("/");
+});
+
+test("workspace loads and step navigation changes highlighted code", async ({
+  page,
+}) => {
+  await expect(
+    page.getByRole("heading", { name: "Understand every move." }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Array:", { exact: false })).toBeVisible();
+  await page.getByRole("button", { name: "Next step", exact: true }).click();
+  await expect(page.locator('[aria-current="step"]')).toContainText(
+    "key = collection[i]",
+  );
+  await expect(page.getByText("Context attached · step 1")).toBeVisible();
+});
+
+test("sends exact step, mode, variables and bounded history", async ({
+  page,
+}) => {
+  const requests: any[] = [];
+  await page.route("**/api/tutor", (route) => {
+    requests.push(route.request().postDataJSON());
+    return route.fulfill({ json: reply });
   });
+  const shiftIndex = demo.frames.findIndex(
+    (f: any) => f.arrays.collection.join(",") === "2,7,9,9",
+  );
+  await page.getByLabel("Execution step").fill(String(shiftIndex));
+  await page.getByRole("button", { name: "Give a hint", exact: true }).click();
+  await page.getByLabel("Ask the tutor").fill("Did we lose 4?");
+  await page.getByRole("button", { name: "Ask tutor" }).click();
+  await expect(page.getByRole("log")).toContainText(reply.answer);
+  expect(requests[0].context.variables.key).toBe(4);
+  expect(requests[0].context.arrays.collection).toEqual([2, 7, 9, 9]);
+  expect(requests[0].context.phase).toBe("after");
+  expect(requests[0].mode).toBe("hint");
+  expect(requests[0].history).toEqual([]);
+  await page.getByLabel("Ask the tutor").fill("Was that a swap?");
+  await page.getByRole("button", { name: "Ask tutor" }).click();
+  await expect(page.locator(".message.assistant")).toHaveCount(2);
+  expect(requests[1].history).toHaveLength(2);
+  expect(requests[1].history[0].content).toContain("Did we lose 4?");
+});
 
-  test("send message and receive response", async ({ page }) => {
-    await mockApi(page);
-    await page.goto("/");
+test("references are expandable and answer is attached to a step", async ({
+  page,
+}) => {
+  await page.getByRole("button", { name: "Explain this step" }).click();
+  await expect(page.locator(".message.assistant")).toContainText("Step 0");
+  await page.getByText("1 teaching references provided to the model").click();
+  await expect(
+    page.getByText("The saved key is kept separately during shifts."),
+  ).toBeVisible();
+});
 
-    await page.getByPlaceholder("Ask me to generate AVP code...").fill("write a function to add two numbers");
-    await page.getByRole("button", { name: "Send" }).click();
+test("validation error arrays render as a readable error and question is preserved", async ({
+  page,
+}) => {
+  await page.route("**/api/tutor", (route) =>
+    route.fulfill({
+      status: 422,
+      json: { detail: [{ msg: "Invalid context" }] },
+    }),
+  );
+  await page.getByLabel("Ask the tutor").fill("Why?");
+  await page.getByRole("button", { name: "Ask tutor" }).click();
+  await expect(page.getByRole("alert")).toContainText(
+    "Check the supplied code",
+  );
+  await expect(page.getByLabel("Ask the tutor")).toHaveValue("Why?");
+  await expect(page.locator(".message")).toHaveCount(0);
+});
 
-    const assistant = page.locator("pre").first();
-    await expect(assistant).toBeVisible();
-    await expect(assistant).toContainText("fun addNumbers");
+test("rate limit is actionable", async ({ page }) => {
+  await page.route("**/api/tutor", (route) =>
+    route.fulfill({ status: 429, body: "Rate limit exceeded" }),
+  );
+  await page.getByRole("button", { name: "Explain this step" }).click();
+  await expect(page.getByRole("alert")).toContainText("Wait a moment");
+});
+
+test("network failure allows retry", async ({ page }) => {
+  await page.route("**/api/tutor", (route) => route.abort());
+  await page.getByLabel("Ask the tutor").fill("Why does key exist?");
+  await page.getByRole("button", { name: "Ask tutor" }).click();
+  await expect(page.getByRole("alert")).toBeVisible();
+  await expect(page.getByLabel("Ask the tutor")).toHaveValue(
+    "Why does key exist?",
+  );
+  await expect(page.getByRole("button", { name: "Ask tutor" })).toBeEnabled();
+});
+
+test("empty question is disabled and clear chat resets history", async ({
+  page,
+}) => {
+  await expect(page.getByRole("button", { name: "Ask tutor" })).toBeDisabled();
+  await page.getByRole("button", { name: "Explain this step" }).click();
+  await expect(page.locator(".message.assistant")).toHaveCount(1);
+  await page.getByRole("button", { name: "Clear chat" }).click();
+  await expect(page.locator(".message")).toHaveCount(0);
+});
+
+test("mobile layout remains inside the viewport", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(
+    page.getByRole("heading", { name: "Insertion sort", exact: true }),
+  ).toBeVisible();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+});
+
+test("stopping a request recovers input and does not add an answer", async ({
+  page,
+}) => {
+  let release!: () => void;
+  const pending = new Promise<void>((resolve) => {
+    release = resolve;
   });
-
-  test("response contains AVP keywords", async ({ page }) => {
-    await mockApi(page);
-    await page.goto("/");
-
-    await page.getByPlaceholder("Ask me to generate AVP code...").fill("write a function to add two numbers");
-    await page.getByRole("button", { name: "Send" }).click();
-
-    const assistant = page.locator("pre").first();
-    await expect(assistant).toBeVisible();
-    const text = await assistant.textContent();
-    expect(text).toMatch(/fun\b/);
-    expect(text).toMatch(/end fun/);
+  await page.route("**/api/tutor", async (route) => {
+    await pending;
+    await route.fulfill({ json: reply }).catch(() => {});
   });
-
-  test("multiple messages appear in chat", async ({ page }) => {
-    await mockApi(page);
-    await page.goto("/");
-
-    const input = page.getByPlaceholder("Ask me to generate AVP code...");
-    await input.fill("write a function to add two numbers");
-    await page.getByRole("button", { name: "Send" }).click();
-    await page.locator("pre").first().waitFor();
-
-    await input.fill("write a fibonacci function");
-    await page.getByRole("button", { name: "Send" }).click();
-
-    await expect(page.locator("pre")).toHaveCount(2);
-  });
-
-  test("empty input does not send", async ({ page }) => {
-    await mockApi(page);
-    await page.goto("/");
-    await expect(page.getByRole("button", { name: "Send" })).toBeDisabled();
-  });
-
-  test("rate limit error renders", async ({ page }) => {
-    await page.route("**/api/health", (route) =>
-      route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(HEALTH_OK) }),
-    );
-    await page.route("**/api/generate", (route) =>
-      route.fulfill({ status: 429, contentType: "text/plain", body: "Rate limit exceeded" }),
-    );
-    await page.goto("/");
-
-    await page.getByPlaceholder("Ask me to generate AVP code...").fill("trigger rate limit");
-    await page.getByRole("button", { name: "Send" }).click();
-
-    await expect(page.getByText("Rate limit exceeded")).toBeVisible();
-  });
-
-  test("server error renders", async ({ page }) => {
-    await page.route("**/api/health", (route) =>
-      route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(HEALTH_OK) }),
-    );
-    await page.route("**/api/generate", (route) =>
-      route.fulfill({
-        status: 500,
-        contentType: "application/json",
-        body: JSON.stringify({ detail: "Internal server error" }),
-      }),
-    );
-    await page.goto("/");
-
-    await page.getByPlaceholder("Ask me to generate AVP code...").fill("trigger error");
-    await page.getByRole("button", { name: "Send" }).click();
-
-    await expect(page.getByText("Internal server error")).toBeVisible();
-  });
-
-  test("network failure renders", async ({ page }) => {
-    await page.route("**/api/health", (route) =>
-      route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(HEALTH_OK) }),
-    );
-    await page.route("**/api/generate", (route) => route.abort());
-    await page.goto("/");
-
-    await page.getByPlaceholder("Ask me to generate AVP code...").fill("trigger network failure");
-    await page.getByRole("button", { name: "Send" }).click();
-
-    await expect(page.getByText("Failed to connect to the server.")).toBeVisible();
-  });
+  await page.getByLabel("Ask the tutor").fill("Why?");
+  await page.getByRole("button", { name: "Ask tutor" }).click();
+  await page.getByRole("button", { name: "Stop", exact: true }).click();
+  release();
+  await expect(page.getByRole("alert")).toContainText("Request stopped");
+  await expect(page.locator(".message.assistant")).toHaveCount(0);
 });

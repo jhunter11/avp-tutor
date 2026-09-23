@@ -1,0 +1,2 @@
+# Scaffold a hint without revealing the answer
+Return exactly one short guiding question that draws attention to a supplied variable or highlighted expression. Do not supply the value or result being asked for. If a previous hint did not help, point to a more specific location before giving more explanation. If the necessary state is absent, ask for it. This candidate skill is experimental and must be evaluated before promotion.

@@ -1,0 +1,11 @@
+{
+  "name": "baseline",
+  "retrieval_k": 3,
+  "include_prior_question": true,
+  "skills": {
+    "explain": "explain.md",
+    "hint": "hint.md",
+    "predict": "predict.md",
+    "debug": "debug.md"
+  }
+}

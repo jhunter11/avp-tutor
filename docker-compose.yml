@@ -1,48 +1,12 @@
 services:
-  avp-rag:
+  tutor:
     build:
       context: .
       dockerfile: Dockerfile.full
     ports:
-      - "8000:8000"
-    env_file:
-      - .env
-    volumes:
-      - ./data:/app/data
-    depends_on:
-      vllm:
-        condition: service_healthy
-        required: false
-
-  vllm:
-    image: vllm/vllm-openai:latest
-    profiles:
-      - vllm
-    ports:
-      - "8080:8080"
+      - "127.0.0.1:8000:8000"
+    env_file: .env
     environment:
-      - HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN:-}
-    volumes:
-      - huggingface_cache:/root/.cache/huggingface
-    command: >
-      --model Qwen/Qwen3-8B
-      --port 8080
-      --max-model-len 8192
-      --gpu-memory-utilization 0.90
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
-    healthcheck:
-      test: ["CMD", "python3", "-c",
-             "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')"]
-      interval: 30s
-      timeout: 10s
-      start_period: 300s
-      retries: 5
-
-volumes:
-  huggingface_cache:
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

@@ -1,0 +1,959 @@
+{
+  "algorithm": "insertion_sort",
+  "frames": [
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 1,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 0,
+      "variables": {
+        "size": 4
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 4]
+      },
+      "recent_events": [
+        {
+          "kind": "start",
+          "description": "Input is ready. Sorting has not started.",
+          "line": 1,
+          "indices": [],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 3,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 1,
+      "variables": {
+        "size": 4,
+        "i": 1,
+        "key": 7
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 4]
+      },
+      "recent_events": [
+        {
+          "kind": "start",
+          "description": "Input is ready. Sorting has not started.",
+          "line": 1,
+          "indices": [],
+          "details": {}
+        },
+        {
+          "kind": "save",
+          "description": "Saved collection[1] = 7 in key.",
+          "line": 3,
+          "indices": [1],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 4,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 2,
+      "variables": {
+        "size": 4,
+        "i": 1,
+        "key": 7,
+        "j": 0
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 4]
+      },
+      "recent_events": [
+        {
+          "kind": "start",
+          "description": "Input is ready. Sorting has not started.",
+          "line": 1,
+          "indices": [],
+          "details": {}
+        },
+        {
+          "kind": "save",
+          "description": "Saved collection[1] = 7 in key.",
+          "line": 3,
+          "indices": [1],
+          "details": {}
+        },
+        {
+          "kind": "pointer",
+          "description": "Set j to 0.",
+          "line": 4,
+          "indices": [0],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 6,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 3,
+      "variables": {
+        "size": 4,
+        "i": 1,
+        "key": 7,
+        "j": 0
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 4]
+      },
+      "recent_events": [
+        {
+          "kind": "save",
+          "description": "Saved collection[1] = 7 in key.",
+          "line": 3,
+          "indices": [1],
+          "details": {}
+        },
+        {
+          "kind": "pointer",
+          "description": "Set j to 0.",
+          "line": 4,
+          "indices": [0],
+          "details": {}
+        },
+        {
+          "kind": "compare",
+          "description": "Compared collection[0] = 2 > key = 7: False.",
+          "line": 6,
+          "indices": [0],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 10,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 4,
+      "variables": {
+        "size": 4,
+        "i": 1,
+        "key": 7,
+        "j": 0
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 4]
+      },
+      "recent_events": [
+        {
+          "kind": "pointer",
+          "description": "Set j to 0.",
+          "line": 4,
+          "indices": [0],
+          "details": {}
+        },
+        {
+          "kind": "compare",
+          "description": "Compared collection[0] = 2 > key = 7: False.",
+          "line": 6,
+          "indices": [0],
+          "details": {}
+        },
+        {
+          "kind": "break",
+          "description": "The current value is not larger than key; stop shifting.",
+          "line": 10,
+          "indices": [0],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 13,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 5,
+      "variables": {
+        "size": 4,
+        "i": 1,
+        "key": 7,
+        "j": 0
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 4]
+      },
+      "recent_events": [
+        {
+          "kind": "compare",
+          "description": "Compared collection[0] = 2 > key = 7: False.",
+          "line": 6,
+          "indices": [0],
+          "details": {}
+        },
+        {
+          "kind": "break",
+          "description": "The current value is not larger than key; stop shifting.",
+          "line": 10,
+          "indices": [0],
+          "details": {}
+        },
+        {
+          "kind": "insert",
+          "description": "Placed saved key 7 at index 1. Prefix through index 1 is sorted.",
+          "line": 13,
+          "indices": [1],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 3,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 6,
+      "variables": {
+        "size": 4,
+        "i": 2,
+        "key": 9,
+        "j": 0
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 4]
+      },
+      "recent_events": [
+        {
+          "kind": "break",
+          "description": "The current value is not larger than key; stop shifting.",
+          "line": 10,
+          "indices": [0],
+          "details": {}
+        },
+        {
+          "kind": "insert",
+          "description": "Placed saved key 7 at index 1. Prefix through index 1 is sorted.",
+          "line": 13,
+          "indices": [1],
+          "details": {}
+        },
+        {
+          "kind": "save",
+          "description": "Saved collection[2] = 9 in key.",
+          "line": 3,
+          "indices": [2],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 4,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 7,
+      "variables": {
+        "size": 4,
+        "i": 2,
+        "key": 9,
+        "j": 1
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 4]
+      },
+      "recent_events": [
+        {
+          "kind": "insert",
+          "description": "Placed saved key 7 at index 1. Prefix through index 1 is sorted.",
+          "line": 13,
+          "indices": [1],
+          "details": {}
+        },
+        {
+          "kind": "save",
+          "description": "Saved collection[2] = 9 in key.",
+          "line": 3,
+          "indices": [2],
+          "details": {}
+        },
+        {
+          "kind": "pointer",
+          "description": "Set j to 1.",
+          "line": 4,
+          "indices": [1],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 6,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 8,
+      "variables": {
+        "size": 4,
+        "i": 2,
+        "key": 9,
+        "j": 1
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 4]
+      },
+      "recent_events": [
+        {
+          "kind": "save",
+          "description": "Saved collection[2] = 9 in key.",
+          "line": 3,
+          "indices": [2],
+          "details": {}
+        },
+        {
+          "kind": "pointer",
+          "description": "Set j to 1.",
+          "line": 4,
+          "indices": [1],
+          "details": {}
+        },
+        {
+          "kind": "compare",
+          "description": "Compared collection[1] = 7 > key = 9: False.",
+          "line": 6,
+          "indices": [1],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 10,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 9,
+      "variables": {
+        "size": 4,
+        "i": 2,
+        "key": 9,
+        "j": 1
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 4]
+      },
+      "recent_events": [
+        {
+          "kind": "pointer",
+          "description": "Set j to 1.",
+          "line": 4,
+          "indices": [1],
+          "details": {}
+        },
+        {
+          "kind": "compare",
+          "description": "Compared collection[1] = 7 > key = 9: False.",
+          "line": 6,
+          "indices": [1],
+          "details": {}
+        },
+        {
+          "kind": "break",
+          "description": "The current value is not larger than key; stop shifting.",
+          "line": 10,
+          "indices": [1],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 13,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 10,
+      "variables": {
+        "size": 4,
+        "i": 2,
+        "key": 9,
+        "j": 1
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 4]
+      },
+      "recent_events": [
+        {
+          "kind": "compare",
+          "description": "Compared collection[1] = 7 > key = 9: False.",
+          "line": 6,
+          "indices": [1],
+          "details": {}
+        },
+        {
+          "kind": "break",
+          "description": "The current value is not larger than key; stop shifting.",
+          "line": 10,
+          "indices": [1],
+          "details": {}
+        },
+        {
+          "kind": "insert",
+          "description": "Placed saved key 9 at index 2. Prefix through index 2 is sorted.",
+          "line": 13,
+          "indices": [2],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 3,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 11,
+      "variables": {
+        "size": 4,
+        "i": 3,
+        "key": 4,
+        "j": 1
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 4]
+      },
+      "recent_events": [
+        {
+          "kind": "break",
+          "description": "The current value is not larger than key; stop shifting.",
+          "line": 10,
+          "indices": [1],
+          "details": {}
+        },
+        {
+          "kind": "insert",
+          "description": "Placed saved key 9 at index 2. Prefix through index 2 is sorted.",
+          "line": 13,
+          "indices": [2],
+          "details": {}
+        },
+        {
+          "kind": "save",
+          "description": "Saved collection[3] = 4 in key.",
+          "line": 3,
+          "indices": [3],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 4,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 12,
+      "variables": {
+        "size": 4,
+        "i": 3,
+        "key": 4,
+        "j": 2
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 4]
+      },
+      "recent_events": [
+        {
+          "kind": "insert",
+          "description": "Placed saved key 9 at index 2. Prefix through index 2 is sorted.",
+          "line": 13,
+          "indices": [2],
+          "details": {}
+        },
+        {
+          "kind": "save",
+          "description": "Saved collection[3] = 4 in key.",
+          "line": 3,
+          "indices": [3],
+          "details": {}
+        },
+        {
+          "kind": "pointer",
+          "description": "Set j to 2.",
+          "line": 4,
+          "indices": [2],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 6,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 13,
+      "variables": {
+        "size": 4,
+        "i": 3,
+        "key": 4,
+        "j": 2
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 4]
+      },
+      "recent_events": [
+        {
+          "kind": "save",
+          "description": "Saved collection[3] = 4 in key.",
+          "line": 3,
+          "indices": [3],
+          "details": {}
+        },
+        {
+          "kind": "pointer",
+          "description": "Set j to 2.",
+          "line": 4,
+          "indices": [2],
+          "details": {}
+        },
+        {
+          "kind": "compare",
+          "description": "Compared collection[2] = 9 > key = 4: True.",
+          "line": 6,
+          "indices": [2],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 7,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 14,
+      "variables": {
+        "size": 4,
+        "i": 3,
+        "key": 4,
+        "j": 2
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 9]
+      },
+      "recent_events": [
+        {
+          "kind": "pointer",
+          "description": "Set j to 2.",
+          "line": 4,
+          "indices": [2],
+          "details": {}
+        },
+        {
+          "kind": "compare",
+          "description": "Compared collection[2] = 9 > key = 4: True.",
+          "line": 6,
+          "indices": [2],
+          "details": {}
+        },
+        {
+          "kind": "shift",
+          "description": "Copied 9 from index 2 to index 3, overwriting 4 at index 3. Source index 2 is unchanged. key still holds 4.",
+          "line": 7,
+          "indices": [2, 3],
+          "details": {
+            "source_index": 2,
+            "destination_index": 3,
+            "copied_value": 9,
+            "overwritten_value": 4,
+            "saved_key": 4
+          }
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 8,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 15,
+      "variables": {
+        "size": 4,
+        "i": 3,
+        "key": 4,
+        "j": 1
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 9]
+      },
+      "recent_events": [
+        {
+          "kind": "compare",
+          "description": "Compared collection[2] = 9 > key = 4: True.",
+          "line": 6,
+          "indices": [2],
+          "details": {}
+        },
+        {
+          "kind": "shift",
+          "description": "Copied 9 from index 2 to index 3, overwriting 4 at index 3. Source index 2 is unchanged. key still holds 4.",
+          "line": 7,
+          "indices": [2, 3],
+          "details": {
+            "source_index": 2,
+            "destination_index": 3,
+            "copied_value": 9,
+            "overwritten_value": 4,
+            "saved_key": 4
+          }
+        },
+        {
+          "kind": "pointer",
+          "description": "Decreased j to 1.",
+          "line": 8,
+          "indices": [1],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 6,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 16,
+      "variables": {
+        "size": 4,
+        "i": 3,
+        "key": 4,
+        "j": 1
+      },
+      "arrays": {
+        "collection": [2, 7, 9, 9]
+      },
+      "recent_events": [
+        {
+          "kind": "shift",
+          "description": "Copied 9 from index 2 to index 3, overwriting 4 at index 3. Source index 2 is unchanged. key still holds 4.",
+          "line": 7,
+          "indices": [2, 3],
+          "details": {
+            "source_index": 2,
+            "destination_index": 3,
+            "copied_value": 9,
+            "overwritten_value": 4,
+            "saved_key": 4
+          }
+        },
+        {
+          "kind": "pointer",
+          "description": "Decreased j to 1.",
+          "line": 8,
+          "indices": [1],
+          "details": {}
+        },
+        {
+          "kind": "compare",
+          "description": "Compared collection[1] = 7 > key = 4: True.",
+          "line": 6,
+          "indices": [1],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 7,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 17,
+      "variables": {
+        "size": 4,
+        "i": 3,
+        "key": 4,
+        "j": 1
+      },
+      "arrays": {
+        "collection": [2, 7, 7, 9]
+      },
+      "recent_events": [
+        {
+          "kind": "pointer",
+          "description": "Decreased j to 1.",
+          "line": 8,
+          "indices": [1],
+          "details": {}
+        },
+        {
+          "kind": "compare",
+          "description": "Compared collection[1] = 7 > key = 4: True.",
+          "line": 6,
+          "indices": [1],
+          "details": {}
+        },
+        {
+          "kind": "shift",
+          "description": "Copied 7 from index 1 to index 2, overwriting 9 at index 2. Source index 1 is unchanged. key still holds 4.",
+          "line": 7,
+          "indices": [1, 2],
+          "details": {
+            "source_index": 1,
+            "destination_index": 2,
+            "copied_value": 7,
+            "overwritten_value": 9,
+            "saved_key": 4
+          }
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 8,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 18,
+      "variables": {
+        "size": 4,
+        "i": 3,
+        "key": 4,
+        "j": 0
+      },
+      "arrays": {
+        "collection": [2, 7, 7, 9]
+      },
+      "recent_events": [
+        {
+          "kind": "compare",
+          "description": "Compared collection[1] = 7 > key = 4: True.",
+          "line": 6,
+          "indices": [1],
+          "details": {}
+        },
+        {
+          "kind": "shift",
+          "description": "Copied 7 from index 1 to index 2, overwriting 9 at index 2. Source index 1 is unchanged. key still holds 4.",
+          "line": 7,
+          "indices": [1, 2],
+          "details": {
+            "source_index": 1,
+            "destination_index": 2,
+            "copied_value": 7,
+            "overwritten_value": 9,
+            "saved_key": 4
+          }
+        },
+        {
+          "kind": "pointer",
+          "description": "Decreased j to 0.",
+          "line": 8,
+          "indices": [0],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 6,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 19,
+      "variables": {
+        "size": 4,
+        "i": 3,
+        "key": 4,
+        "j": 0
+      },
+      "arrays": {
+        "collection": [2, 7, 7, 9]
+      },
+      "recent_events": [
+        {
+          "kind": "shift",
+          "description": "Copied 7 from index 1 to index 2, overwriting 9 at index 2. Source index 1 is unchanged. key still holds 4.",
+          "line": 7,
+          "indices": [1, 2],
+          "details": {
+            "source_index": 1,
+            "destination_index": 2,
+            "copied_value": 7,
+            "overwritten_value": 9,
+            "saved_key": 4
+          }
+        },
+        {
+          "kind": "pointer",
+          "description": "Decreased j to 0.",
+          "line": 8,
+          "indices": [0],
+          "details": {}
+        },
+        {
+          "kind": "compare",
+          "description": "Compared collection[0] = 2 > key = 4: False.",
+          "line": 6,
+          "indices": [0],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 10,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 20,
+      "variables": {
+        "size": 4,
+        "i": 3,
+        "key": 4,
+        "j": 0
+      },
+      "arrays": {
+        "collection": [2, 7, 7, 9]
+      },
+      "recent_events": [
+        {
+          "kind": "pointer",
+          "description": "Decreased j to 0.",
+          "line": 8,
+          "indices": [0],
+          "details": {}
+        },
+        {
+          "kind": "compare",
+          "description": "Compared collection[0] = 2 > key = 4: False.",
+          "line": 6,
+          "indices": [0],
+          "details": {}
+        },
+        {
+          "kind": "break",
+          "description": "The current value is not larger than key; stop shifting.",
+          "line": 10,
+          "indices": [0],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 13,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 21,
+      "variables": {
+        "size": 4,
+        "i": 3,
+        "key": 4,
+        "j": 0
+      },
+      "arrays": {
+        "collection": [2, 4, 7, 9]
+      },
+      "recent_events": [
+        {
+          "kind": "compare",
+          "description": "Compared collection[0] = 2 > key = 4: False.",
+          "line": 6,
+          "indices": [0],
+          "details": {}
+        },
+        {
+          "kind": "break",
+          "description": "The current value is not larger than key; stop shifting.",
+          "line": 10,
+          "indices": [0],
+          "details": {}
+        },
+        {
+          "kind": "insert",
+          "description": "Placed saved key 4 at index 1. Prefix through index 3 is sorted.",
+          "line": 13,
+          "indices": [1],
+          "details": {}
+        }
+      ]
+    },
+    {
+      "algorithm": "insertion_sort",
+      "language_version": "avp-repository-v1",
+      "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+      "current_line": 15,
+      "phase": "after",
+      "run_id": "insertion-9da907401d90",
+      "step": 22,
+      "variables": {
+        "size": 4,
+        "i": 3,
+        "key": 4,
+        "j": 0
+      },
+      "arrays": {
+        "collection": [2, 4, 7, 9]
+      },
+      "recent_events": [
+        {
+          "kind": "break",
+          "description": "The current value is not larger than key; stop shifting.",
+          "line": 10,
+          "indices": [0],
+          "details": {}
+        },
+        {
+          "kind": "insert",
+          "description": "Placed saved key 4 at index 1. Prefix through index 3 is sorted.",
+          "line": 13,
+          "indices": [1],
+          "details": {}
+        },
+        {
+          "kind": "complete",
+          "description": "Returned the sorted collection.",
+          "line": 15,
+          "indices": [],
+          "details": {}
+        }
+      ]
+    }
+  ]
+}

@@ -2,7 +2,8 @@ import asyncio
 
 from fastapi import APIRouter, HTTPException, Request
 
-from providers import get_provider_name, is_provider_configured
+from providers import get_provider_name, is_provider_configured, provider_model
+from tutor.knowledge import knowledge_version
 
 from .cache import generation_cache, retrieval_cache
 from .dependencies import limiter
@@ -24,6 +25,9 @@ async def health():
 
     return HealthResponse(
         status="ok",
+        provider=get_provider_name(),
+        model=provider_model(),
+        knowledge_version=knowledge_version(),
         retriever_loaded=_retriever is not None,
         provider_configured=is_provider_configured(),
     )
@@ -59,10 +63,17 @@ async def generate(body: GenerateRequest, request: Request):
 
     from generate import generate_code
 
-    result = await asyncio.to_thread(generate_code, body.query)
+    try:
+        result = await asyncio.to_thread(generate_code, body.query)
+    except Exception:
+        raise HTTPException(
+            status_code=503,
+            detail="The model is unavailable. Check server configuration.",
+        ) from None
 
     response_data = {
         "generated_code": result["generated_code"],
+        "validation": result.get("validation"),
         "retrieved_functions": [
             RetrievedFunction(**r) for r in result["retrieved_functions"]
         ],

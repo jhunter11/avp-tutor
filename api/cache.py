@@ -12,7 +12,7 @@ class TTLCache:
 
     @staticmethod
     def _normalize_key(key: str) -> str:
-        return key.strip().lower()
+        return key
 
     def get(self, key: str) -> Optional[Any]:
         normalized = self._normalize_key(key)

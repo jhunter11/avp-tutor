@@ -14,7 +14,6 @@ from slowapi.errors import RateLimitExceeded
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
-os.chdir(PROJECT_ROOT)
 
 load_dotenv(PROJECT_ROOT / ".env")
 
@@ -24,14 +23,14 @@ from .routes import router
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
-    # Eagerly initialize the retriever at startup
-    import asyncio
-    from retrieve import get_retriever
-    await asyncio.to_thread(get_retriever)
+    # Tutor startup never downloads embedding models.
+    from tutor.knowledge import load_notes
+
+    load_notes()
     yield
 
 
-app = FastAPI(title="AVP RAG API", lifespan=lifespan)
+app = FastAPI(title="AVP Algorithm Tutor API", lifespan=lifespan)
 
 # Rate limiting
 app.state.limiter = limiter
@@ -39,7 +38,9 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # CORS — extend with CORS_ORIGINS env var (comma-separated) for deployed frontends
 _DEFAULT_ORIGINS = ["http://localhost:5173", "http://localhost:3000"]
-_extra_origins = [o.strip() for o in os.environ.get("CORS_ORIGINS", "").split(",") if o.strip()]
+_extra_origins = [
+    o.strip() for o in os.environ.get("CORS_ORIGINS", "").split(",") if o.strip()
+]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=_DEFAULT_ORIGINS + _extra_origins,
@@ -48,6 +49,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from .middleware import BodyLimitMiddleware
+from .tutor_routes import router as tutor_router
+
+app.add_middleware(BodyLimitMiddleware, max_bytes=131072)
+from .feedback_routes import router as feedback_router
+
+app.include_router(feedback_router)
+app.include_router(tutor_router)
 app.include_router(router)
 
 # Serve built frontend from static/ if it exists

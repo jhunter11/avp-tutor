@@ -5,6 +5,15 @@ frontend/dist/
 .git/
 __pycache__/
 .env
+.env.*
+**/.env
+**/.env.*
 *.pyc
 .claude/
 static/
+
+artifacts/
+frontend/test-results/
+frontend/playwright-report/
+.pytest_cache/
+.ruff_cache/

@@ -1,0 +1,63 @@
+{
+  "question": "Did we lose the value that was overwritten?",
+  "mode": "explain",
+  "context": {
+    "algorithm": "insertion_sort",
+    "language_version": "avp-repository-v1",
+    "code": "fun insertion_sort(collection, size):\n    for (i = 1, i < size, i += 1):\n        key = collection[i]\n        j = i - 1\n        while (j >= 0):\n            if (collection[j] > key):\n                collection[j + 1] = collection[j]\n                j = j - 1\n            else:\n                break\n            end if\n        end while\n        collection[j + 1] = key\n    end for\n    return collection\nend fun",
+    "current_line": 7,
+    "phase": "after",
+    "run_id": "insertion-9da907401d90",
+    "step": 14,
+    "variables": {
+      "size": 4,
+      "i": 3,
+      "key": 4,
+      "j": 2
+    },
+    "arrays": {
+      "collection": [
+        2,
+        7,
+        9,
+        9
+      ]
+    },
+    "recent_events": [
+      {
+        "kind": "pointer",
+        "description": "Set j to 2.",
+        "line": 4,
+        "indices": [
+          2
+        ],
+        "details": {}
+      },
+      {
+        "kind": "compare",
+        "description": "Compared collection[2] = 9 > key = 4: True.",
+        "line": 6,
+        "indices": [
+          2
+        ],
+        "details": {}
+      },
+      {
+        "kind": "shift",
+        "description": "Copied 9 from index 2 to index 3, overwriting 4 at index 3. Source index 2 is unchanged. key still holds 4.",
+        "line": 7,
+        "indices": [
+          2,
+          3
+        ],
+        "details": {
+          "source_index": 2,
+          "destination_index": 3,
+          "copied_value": 9,
+          "overwritten_value": 4,
+          "saved_key": 4
+        }
+      }
+    ]
+  }
+}

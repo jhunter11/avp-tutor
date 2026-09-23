@@ -22,12 +22,13 @@ def _setup(env_overrides: dict | None = None):
     env = {
         "ANTHROPIC_API_KEY": "fake-key-for-testing",
         "LLM_PROVIDER": "anthropic",
+        "ANTHROPIC_MODEL": "test-model",
     }
     if env_overrides:
         env.update(env_overrides)
 
-    from api.main import app
     from api.cache import generation_cache, retrieval_cache
+    from api.main import app
 
     generation_cache.clear()
     retrieval_cache.clear()
@@ -100,10 +101,15 @@ class TestProviderFallback:
         # With API key -> configured
         with (
             patch("retrieve._retriever", mock_retriever),
-            patch.dict(os.environ, {
-                "LLM_PROVIDER": "anthropic",
-                "ANTHROPIC_API_KEY": "fake",
-            }, clear=True),
+            patch.dict(
+                os.environ,
+                {
+                    "LLM_PROVIDER": "anthropic",
+                    "ANTHROPIC_MODEL": "test-model",
+                    "ANTHROPIC_API_KEY": "fake",
+                },
+                clear=True,
+            ),
             patch("api.dependencies.limiter", fresh_limiter),
             patch("api.routes.limiter", fresh_limiter),
             TestClient(app) as client,
@@ -114,9 +120,14 @@ class TestProviderFallback:
         # Without API key -> not configured
         with (
             patch("retrieve._retriever", mock_retriever),
-            patch.dict(os.environ, {
-                "LLM_PROVIDER": "anthropic",
-            }, clear=True),
+            patch.dict(
+                os.environ,
+                {
+                    "LLM_PROVIDER": "anthropic",
+                    "ANTHROPIC_MODEL": "test-model",
+                },
+                clear=True,
+            ),
             patch("api.dependencies.limiter", fresh_limiter),
             patch("api.routes.limiter", fresh_limiter),
             TestClient(app) as client,
@@ -124,7 +135,7 @@ class TestProviderFallback:
             resp = client.get("/api/health")
             assert resp.json()["provider_configured"] is False
 
-    def test_generate_500_when_all_providers_fail(self):
+    def test_generate_503_when_all_providers_fail(self):
         app, mock_retriever, env, fresh_limiter = _setup(
             env_overrides={"LLM_FALLBACK_PROVIDER": "vllm"},
         )
@@ -141,4 +152,4 @@ class TestProviderFallback:
             TestClient(app, raise_server_exceptions=False) as client,
         ):
             resp = client.post("/api/generate", json={"message": "add numbers"})
-            assert resp.status_code == 500
+            assert resp.status_code == 503

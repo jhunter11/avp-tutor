@@ -1,7 +1,7 @@
 {
-  "name": "avp-rag-frontend",
+  "name": "avp-tutor-frontend",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,9 @@
     "test:e2e": "playwright test",
     "test:e2e:ci": "playwright test --project=ci",
     "test:e2e:ui": "playwright test --ui",
-    "deploy:gh-pages": "VITE_BASE_PATH=/avp_rag_system/ vite build && npx gh-pages -d dist"
+    "deploy:gh-pages": "VITE_BASE_PATH=/avp-tutor/ vite build && npx gh-pages -d dist",
+    "generate:types": "openapi-typescript ../integrations/openapi.json -o ../integrations/schema.d.ts",
+    "format": "prettier --write src e2e ../integrations/tutor-client.ts"
   },
   "dependencies": {
     "react": "^19.1.0",
@@ -19,13 +21,16 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.52.0",
-    "@tailwindcss/vite": "^4.1.8",
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
     "@vitejs/plugin-react": "^4.5.2",
     "gh-pages": "^6.3.0",
-    "tailwindcss": "^4.1.8",
+    "openapi-typescript": "^7.13.0",
+    "prettier": "^3.9.8",
     "typescript": "~5.8.3",
     "vite": "^6.3.5"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

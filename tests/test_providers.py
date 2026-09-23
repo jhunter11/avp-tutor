@@ -2,7 +2,7 @@
 
 import os
 import sys
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -13,8 +13,8 @@ from providers import (
     _call_anthropic,
     _call_vllm,
     call_llm,
-    is_provider_configured,
     get_provider_name,
+    is_provider_configured,
 )
 
 
@@ -24,17 +24,20 @@ class TestCallAnthropic:
         mock_client = MagicMock()
         mock_cls.return_value = mock_client
         mock_msg = MagicMock()
-        mock_msg.content = [MagicMock(text="generated output")]
+        mock_msg.content = [MagicMock(type="text", text="generated output")]
         mock_client.messages.create.return_value = mock_msg
 
-        with patch.dict(os.environ, {"ANTHROPIC_API_KEY": "test-key"}):
+        with patch.dict(
+            os.environ,
+            {"ANTHROPIC_API_KEY": "test-key", "ANTHROPIC_MODEL": "test-model"},
+        ):
             result = _call_anthropic("hello")
 
         assert result == "generated output"
         mock_client.messages.create.assert_called_once()
 
     def test_raises_without_key(self):
-        with patch.dict(os.environ, {}, clear=True):
+        with patch.dict(os.environ, {"ANTHROPIC_MODEL": "test-model"}, clear=True):
             os.environ.pop("ANTHROPIC_API_KEY", None)
             with pytest.raises(RuntimeError, match="ANTHROPIC_API_KEY"):
                 _call_anthropic("hello")
@@ -55,7 +58,10 @@ class TestCallVllm:
 
         assert result == "vllm output"
         mock_cls.assert_called_once_with(
-            base_url="http://vllm:8080/v1", api_key="token-placeholder"
+            base_url="http://localhost:8001/v1",
+            api_key="local",
+            timeout=90.0,
+            max_retries=0,
         )
 
 
@@ -88,14 +94,23 @@ class TestCallLlm:
     @patch("providers._call_anthropic")
     def test_no_fallback_reraises(self, mock_anthropic):
         mock_anthropic.side_effect = RuntimeError("no key")
-        with patch.dict(os.environ, {"LLM_PROVIDER": "anthropic", "LLM_FALLBACK_PROVIDER": ""}):
+        with patch.dict(
+            os.environ, {"LLM_PROVIDER": "anthropic", "LLM_FALLBACK_PROVIDER": ""}
+        ):
             with pytest.raises(RuntimeError, match="no key"):
                 call_llm("prompt")
 
 
 class TestIsProviderConfigured:
     def test_anthropic_configured(self):
-        with patch.dict(os.environ, {"LLM_PROVIDER": "anthropic", "ANTHROPIC_API_KEY": "key"}):
+        with patch.dict(
+            os.environ,
+            {
+                "LLM_PROVIDER": "anthropic",
+                "ANTHROPIC_API_KEY": "key",
+                "ANTHROPIC_MODEL": "test-model",
+            },
+        ):
             assert is_provider_configured() is True
 
     def test_anthropic_not_configured(self):
@@ -104,7 +119,10 @@ class TestIsProviderConfigured:
             assert is_provider_configured() is False
 
     def test_vllm_configured(self):
-        with patch.dict(os.environ, {"LLM_PROVIDER": "vllm", "VLLM_BASE_URL": "http://localhost:8080/v1"}):
+        with patch.dict(
+            os.environ,
+            {"LLM_PROVIDER": "vllm", "VLLM_BASE_URL": "http://localhost:8080/v1"},
+        ):
             assert is_provider_configured() is True
 
     def test_vllm_not_configured(self):
@@ -116,7 +134,7 @@ class TestIsProviderConfigured:
 class TestGetProviderName:
     def test_default(self):
         with patch.dict(os.environ, {}, clear=True):
-            assert get_provider_name() == "anthropic"
+            assert get_provider_name() == "ollama"
 
     def test_explicit(self):
         with patch.dict(os.environ, {"LLM_PROVIDER": "vllm"}):
