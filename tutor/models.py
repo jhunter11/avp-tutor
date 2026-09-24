@@ -34,7 +34,19 @@ class ExecutionEvent(StrictModel):
     details: dict[str, JsonValue] = Field(default_factory=dict, max_length=20)
 
 
+Strategy = Literal[
+    "auto",
+    "trace",
+    "analogy",
+    "comparison",
+    "invariant",
+    "worked-example",
+    "guided-question",
+]
+
+
 class ExecutionContext(StrictModel):
+    code_version: str = Field(default="", max_length=120)
     algorithm: str = Field(default="", max_length=120)
     language_version: str = Field(default="avp-repository-v1", max_length=80)
     code: str = Field(default="", max_length=16000)
@@ -60,6 +72,7 @@ class ExecutionContext(StrictModel):
 
 
 class TutorRequest(StrictModel):
+    strategy: Strategy = "auto"
     feedback_consent: bool = False
     question: Text
     mode: Literal["explain", "hint", "predict", "debug"] = "explain"
@@ -84,7 +97,48 @@ class Source(StrictModel):
     text: str
 
 
+class EvidenceReport(StrictModel):
+    code_sha256: str | None = None
+    code_version: str = ""
+    status: Literal["not_checked", "consistent", "conflict"] = "not_checked"
+    checks: list[str] = Field(default_factory=list)
+    conflicts: list[str] = Field(default_factory=list)
+    limitations: list[str] = Field(default_factory=list)
+    execution_verified: Literal[False] = False
+
+
+class CodeExample(StrictModel):
+    id: str
+    algorithm: str
+    path: str
+    code: str
+    code_sha256: str
+    syntax_valid: Literal[True] = True
+    execution_verified: Literal[False] = False
+    relationship: str = (
+        "Same algorithm label; implementation equivalence has not been verified."
+    )
+
+
+class TeachingDecision(StrictModel):
+    action: Literal["explain", "hint", "predict", "debug", "clarify"]
+    strategy: Strategy
+    reasons: list[str]
+    policy_version: str = "teaching-policy-v1"
+
+
+class AnswerChecks(StrictModel):
+    unknown_citations: list[str] = Field(default_factory=list)
+    factual_accuracy_verified: Literal[False] = False
+
+
 class TutorResponse(StrictModel):
+    evidence: EvidenceReport = Field(default_factory=EvidenceReport)
+    teaching_decision: TeachingDecision | None = None
+    code_examples: list[CodeExample] = Field(default_factory=list)
+    answer_checks: AnswerChecks = Field(default_factory=AnswerChecks)
+    prompt_sha256: str = ""
+
     interaction_id: str | None = None
     harness_version: str = ""
     skill: str = ""

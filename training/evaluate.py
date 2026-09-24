@@ -2,7 +2,6 @@
 
 import argparse
 import json
-import re
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -64,10 +63,8 @@ def main():
                     example.request.model_copy(update={"feedback_consent": False})
                 )
                 row["response"] = result.model_dump()
-                cited = set(re.findall(r"\[([^\[\]]+:[^\[\]]+)\]", result.answer))
-                allowed = {s.id for s in result.sources}
                 row["automated_flags"] = {
-                    "unknown_citations": sorted(cited - allowed),
+                    "unknown_citations": result.answer_checks.unknown_citations,
                     "empty_answer": not result.answer.strip(),
                     "over_300_words": len(result.answer.split()) > 300,
                 }

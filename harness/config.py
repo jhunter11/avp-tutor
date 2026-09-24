@@ -15,6 +15,7 @@ class HarnessConfig(StrictModel):
     name: str = Field(min_length=1, max_length=100)
     retrieval_k: int = Field(default=3, ge=1, le=6)
     include_prior_question: bool = True
+    code_example_k: int = Field(default=1, ge=0, le=2)
     skills: dict[str, str]
     _texts: dict[str, str] = PrivateAttr(default_factory=dict)
 
