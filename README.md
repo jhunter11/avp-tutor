@@ -120,3 +120,5 @@ Browser CI tests intercept model requests. For real-backend integration tests, s
 Legacy BGE/FAISS retrieval remains available via `uv sync --extra semantic`, `uv run python ingest.py`, and `RETRIEVAL_BACKEND=semantic`. This downloads additional ML dependencies/models and is not needed by the tutor. Invalid source examples are rejected during ingestion.
 
 See [deployment](docs/docker-deploy.md). Deployments are opt-in; this fork does not push to the upstream author's servers or Hugging Face Space. The API has no built-in user authentication: keep the default loopback binding for local use, or put authentication at your application's gateway before public deployment.
+
+For a reproducible question-to-answer walkthrough with selectable teaching strategies and evidence metadata, see [the runnable tutor workflow](docs/workflow.md).

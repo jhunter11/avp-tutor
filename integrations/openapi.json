@@ -1,6 +1,26 @@
 {
   "components": {
     "schemas": {
+      "AnswerChecks": {
+        "additionalProperties": false,
+        "properties": {
+          "factual_accuracy_verified": {
+            "const": false,
+            "default": false,
+            "title": "Factual Accuracy Verified",
+            "type": "boolean"
+          },
+          "unknown_citations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Unknown Citations",
+            "type": "array"
+          }
+        },
+        "title": "AnswerChecks",
+        "type": "object"
+      },
       "ChatTurn": {
         "additionalProperties": false,
         "properties": {
@@ -24,6 +44,57 @@
           "content"
         ],
         "title": "ChatTurn",
+        "type": "object"
+      },
+      "CodeExample": {
+        "additionalProperties": false,
+        "properties": {
+          "algorithm": {
+            "title": "Algorithm",
+            "type": "string"
+          },
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "code_sha256": {
+            "title": "Code Sha256",
+            "type": "string"
+          },
+          "execution_verified": {
+            "const": false,
+            "default": false,
+            "title": "Execution Verified",
+            "type": "boolean"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "relationship": {
+            "default": "Same algorithm label; implementation equivalence has not been verified.",
+            "title": "Relationship",
+            "type": "string"
+          },
+          "syntax_valid": {
+            "const": true,
+            "default": true,
+            "title": "Syntax Valid",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "algorithm",
+          "path",
+          "code",
+          "code_sha256"
+        ],
+        "title": "CodeExample",
         "type": "object"
       },
       "Diagnostic": {
@@ -64,6 +135,66 @@
         "title": "Diagnostic",
         "type": "object"
       },
+      "EvidenceReport": {
+        "additionalProperties": false,
+        "properties": {
+          "checks": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Checks",
+            "type": "array"
+          },
+          "code_sha256": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Code Sha256"
+          },
+          "code_version": {
+            "default": "",
+            "title": "Code Version",
+            "type": "string"
+          },
+          "conflicts": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Conflicts",
+            "type": "array"
+          },
+          "execution_verified": {
+            "const": false,
+            "default": false,
+            "title": "Execution Verified",
+            "type": "boolean"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Limitations",
+            "type": "array"
+          },
+          "status": {
+            "default": "not_checked",
+            "enum": [
+              "not_checked",
+              "consistent",
+              "conflict"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "title": "EvidenceReport",
+        "type": "object"
+      },
       "ExecutionContext": {
         "additionalProperties": false,
         "properties": {
@@ -88,6 +219,12 @@
             "default": "",
             "maxLength": 16000,
             "title": "Code",
+            "type": "string"
+          },
+          "code_version": {
+            "default": "",
+            "maxLength": 120,
+            "title": "Code Version",
             "type": "string"
           },
           "current_line": {
@@ -461,6 +598,54 @@
         "title": "Source",
         "type": "object"
       },
+      "TeachingDecision": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "enum": [
+              "explain",
+              "hint",
+              "predict",
+              "debug",
+              "clarify"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "policy_version": {
+            "default": "teaching-policy-v1",
+            "title": "Policy Version",
+            "type": "string"
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Reasons",
+            "type": "array"
+          },
+          "strategy": {
+            "enum": [
+              "auto",
+              "trace",
+              "analogy",
+              "comparison",
+              "invariant",
+              "worked-example",
+              "guided-question"
+            ],
+            "title": "Strategy",
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "strategy",
+          "reasons"
+        ],
+        "title": "TeachingDecision",
+        "type": "object"
+      },
       "TutorRequest": {
         "additionalProperties": false,
         "properties": {
@@ -513,6 +698,20 @@
             "minLength": 1,
             "title": "Question",
             "type": "string"
+          },
+          "strategy": {
+            "default": "auto",
+            "enum": [
+              "auto",
+              "trace",
+              "analogy",
+              "comparison",
+              "invariant",
+              "worked-example",
+              "guided-question"
+            ],
+            "title": "Strategy",
+            "type": "string"
           }
         },
         "required": [
@@ -528,6 +727,16 @@
             "title": "Answer",
             "type": "string"
           },
+          "answer_checks": {
+            "$ref": "#/components/schemas/AnswerChecks"
+          },
+          "code_examples": {
+            "items": {
+              "$ref": "#/components/schemas/CodeExample"
+            },
+            "title": "Code Examples",
+            "type": "array"
+          },
           "context_status": {
             "enum": [
               "provided",
@@ -536,6 +745,9 @@
             ],
             "title": "Context Status",
             "type": "string"
+          },
+          "evidence": {
+            "$ref": "#/components/schemas/EvidenceReport"
           },
           "fallback_used": {
             "default": false,
@@ -592,6 +804,11 @@
             ],
             "title": "Output Tokens"
           },
+          "prompt_sha256": {
+            "default": "",
+            "title": "Prompt Sha256",
+            "type": "string"
+          },
           "prompt_version": {
             "title": "Prompt Version",
             "type": "string"
@@ -611,6 +828,16 @@
             },
             "title": "Sources",
             "type": "array"
+          },
+          "teaching_decision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TeachingDecision"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "warnings": {
             "items": {
