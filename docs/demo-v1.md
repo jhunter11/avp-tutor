@@ -62,9 +62,14 @@ The server loads their fixed configuration from `demo_v1/harness.json`.
 The demo does not expose the existing feedback or candidate-generation routes.
 The model cannot edit skills, retrieve arbitrary files, run tools, or train itself.
 
-`demo_v1/teaching.json` contains seven candidate confusions for this exercise.
+`demo_v1/teaching.json` contains eight candidate confusions for this exercise.
 Each record names its effect on the solution and a suitable explanation method.
 Keyword matches and observed outputs support teaching choices. They do not diagnose a student's ability.
+Definition questions can have no candidate confusion.
+The runner records actual condition array reads and return scope to support bounded result diagnoses.
+When the problem description is absent, retrieval excludes the exercise contract and the tutor asks about intended output.
+
+Read [the configuration checks](demo-teaching-checks.md) and [the live review](teaching-config-review-2026-10-01.md) before presenting.
 
 ## Retrieval and teaching data
 

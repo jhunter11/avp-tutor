@@ -29,6 +29,8 @@ class Runtime:
         self.env = {}
         self.frames = []
         self.operations = 0
+        self.array_reads = []
+        self.loop_depth = 0
         self.values = values.copy()
         self.target = target
         self.digest = hashlib.sha256(code.encode()).hexdigest()
@@ -43,14 +45,19 @@ class Runtime:
                 "Execution limit reached. Check that the loop makes progress."
             )
 
-    def frame(self, ctx, kind, value=None):
+    def frame(self, ctx, kind, value=None, reads=None):
         line = ctx.start.line
+        details = {"value": value} if value is not None else {}
+        if reads is not None:
+            details["array_reads"] = reads
+        if kind == "return":
+            details["loop_depth"] = self.loop_depth
         event = ExecutionEvent(
             kind=kind,
             line=line,
             description=f"Line {line}: {kind}."
             + (f" Value: {value}." if value is not None else ""),
-            details={"value": value} if value is not None else {},
+            details=details,
         )
         self.frames.append(
             ExecutionContext(
@@ -128,6 +135,9 @@ class Runtime:
                 or not 0 <= index < len(array)
             ):
                 raise DemoRuntimeError("Array index is outside the input bounds.")
+            self.array_reads.append(
+                {"array": ctx.ID().getText(), "index": index, "value": array[index]}
+            )
             return array[index]
         if name in {"AndExpr", "OrExpr"}:
             parts = [ctx.getChild(i) for i in range(0, ctx.getChildCount(), 2)]
@@ -195,8 +205,9 @@ class Runtime:
             elif ctx := statement.ifStatement():
                 conditions, blocks = ctx.expression(), ctx.block()
                 for i, condition in enumerate(conditions):
+                    self.array_reads = []
                     result = bool(self.expression(condition))
-                    self.frame(condition, "condition", result)
+                    self.frame(condition, "condition", result, self.array_reads.copy())
                     if result:
                         self.statements(blocks[i].statement())
                         break
@@ -205,16 +216,22 @@ class Runtime:
                         self.statements(blocks[-1].statement())
             elif ctx := statement.whileLoop():
                 while True:
+                    self.array_reads = []
                     result = bool(self.expression(ctx.expression()))
-                    self.frame(ctx, "condition", result)
+                    self.frame(ctx, "condition", result, self.array_reads.copy())
                     if not result:
                         break
-                    self.statements(ctx.statement())
+                    self.loop_depth += 1
+                    try:
+                        self.statements(ctx.statement())
+                    finally:
+                        self.loop_depth -= 1
             elif ctx := statement.returnStatement():
+                self.array_reads = []
                 value = self.expression(ctx.expression())
                 if type(value) is not int:
                     raise DemoRuntimeError("solution must return an integer index.")
-                self.frame(ctx, "return", value)
+                self.frame(ctx, "return", value, self.array_reads.copy())
                 raise Returned(value)
             else:
                 raise DemoRuntimeError(

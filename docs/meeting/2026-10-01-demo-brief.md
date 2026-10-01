@@ -41,7 +41,7 @@ Show the correction and rerun the tests.
 | Upstream generation/API foundation | Retrieval and provider calls | Reuses the provider interface through the tutor harness |
 | Fork snapshot contract | Code, line, phase, variables, arrays, events | Carries actual runner observations |
 | Fixed tutoring skills | Hint, explain, debug, predict instructions | Selects one skill for each question |
-| Exercise teaching pack | Intent, candidate confusion, effect, explanation method | Guides help on seven common first-match confusions |
+| Exercise teaching pack | Intent, candidate confusion, effect, explanation method | Guides help on eight common first-match confusions |
 | Coding reference retrieval | AVP rules and linear-search facts | Supplies bounded, sourced coding context |
 | Teaching-method index | Probing, graduated hints, transfer-check proposal | Retrieves draft methods separately from coding facts |
 | Optional local notes | Reviewed learner statements | Recalls relevant experience when the learner enables it |

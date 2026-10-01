@@ -58,6 +58,23 @@ An older running process omitted the new attached-case field. Restarting the fin
 These are selected development observations. They are not an instructor-reviewed benchmark or a learning-impact score.
 Gemini remains a selectable provider. This session did not test live Gemini inference.
 
+## Teaching configuration follow-up
+
+The final teaching follow-up has 150 passing backend tests.
+Ruff and JavaScript syntax checks exited 0.
+Sixteen new language and context regressions cover realistic questions and contract exclusions.
+The pack now contains eight confusion cards, including zero-based indexing.
+The runner records actual condition array reads and the loop depth of each return.
+
+The selected live review covers nine scenarios and all four help styles.
+The initial prediction request returned HTTP 503. One retry returned a useful prediction question.
+The first missing-description response revealed a contract-reference leak, which the follow-up fixes.
+A later answer reached the 700-token limit and returned only a fragment with a truncation warning.
+The ignored local configuration now has a 1,600-token budget.
+The final short-answer recheck reported the observed return and asked about intended output, with no warning.
+
+See [the dated configuration review](teaching-config-review-2026-10-01.md) for individual answers and evidence limits.
+
 ## Evidence limits
 
 The new runner supports a small AVP subset. It does not prove conformance with the production interpreter.
