@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AVP Tutor · V1 demo</title><link rel="stylesheet" href="/style.css"><script defer src="/app.js"></script></head>
+<body>
+<header class="top"><span class="wordmark">AVP <b>Tutor</b></span><span class="edition">V1 · Practice document</span><span id="connection" role="status">Connecting…</span></header>
+<main>
+  <div class="intro"><div><p class="eyebrow">Algorithm visualization / AI integration</p><h1>Find the first matching index</h1><p class="lede">Run your AVP code. Inspect what happened. Ask for the next clue.</p></div><button id="reset" class="quiet">Reset demo</button></div>
+  <section class="problem" aria-labelledby="problem-title"><h2 id="problem-title">The practice question</h2><p id="description"></p><div class="problem-footer"><span>Original exercise in the style of Codility</span><label><input type="checkbox" id="includeProblem" checked> Send problem description to tutor</label></div></section>
+  <div class="workspace">
+    <div class="program-column">
+      <section class="panel" aria-labelledby="code-title">
+        <div class="panel-heading"><h2 id="code-title">Your solution <span class="tag">AVP</span></h2><div class="buttons"><button id="loadBuggy" class="quiet">Load flawed draft</button><button id="loadCorrect" class="quiet">Load corrected draft</button></div></div>
+        <label class="sr-only" for="code">AVP solution code</label><textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+        <div class="input-row"><label>Input array<input id="values" value="4, 7, 2, 7" placeholder="4, 7, 2, 7"></label><label class="target">Target<input id="target" value="7" inputmode="numeric"></label><button id="run" class="primary">Run code</button></div>
+        <p id="runStatus" class="small" role="status">Run the draft to inspect its behavior.</p>
+      </section>
+      <section class="panel output-panel" aria-labelledby="output-title"><div class="panel-heading"><h2 id="output-title">Output &amp; test cases</h2><span id="score" class="tag">Not run</span></div><div id="results"></div></section>
+      <section class="panel trace-panel" aria-labelledby="trace-title"><div class="panel-heading"><h2 id="trace-title">Execution trace</h2><div class="buttons"><button id="prev" class="quiet" aria-label="Previous step">←</button><span id="stepLabel" class="small"></span><button id="next" class="quiet" aria-label="Next step">→</button></div></div><div id="array" class="array"></div><div id="variables" class="variables"></div><div id="activeLine" class="active-line"></div><p id="traceMessage" class="small"></p></section>
+    </div>
+    <section class="panel tutor-panel" aria-labelledby="tutor-title">
+      <div class="panel-heading"><h2 id="tutor-title">Tutor</h2><span id="providerLabel" class="tag">Hosted model</span></div>
+      <p class="tutor-intro">A question about this code, with the current input and execution step attached.</p>
+      <div id="conversation" class="conversation" aria-live="polite"><div class="welcome"><span class="welcome-symbol">?</span><h3>Start with the failing case.</h3><p>Ask why the output differs, or request a hint that leaves the correction to you.</p></div></div>
+      <div class="suggestions"><button data-question="Why does my solution fail when the target is later in the array?">Why does this fail?</button><button data-question="Give me one hint about the return statement, without showing the fix.">Give me a hint</button><button data-question="Explain the highlighted line using the current values.">Explain this step</button></div>
+      <form id="askForm"><label for="question" class="small">Your question</label><textarea id="question" rows="3" maxlength="2000" placeholder="What might be wrong with my solution?"></textarea><div class="ask-controls"><label class="small">Help style<select id="mode"><option value="hint">Hint</option><option value="explain">Explain</option><option value="debug">Debug</option><option value="predict">Predict</option></select></label><button id="ask" class="primary" type="submit">Ask tutor</button></div></form>
+      <p id="askStatus" class="small" role="status"></p><p id="providerPrivacy" class="privacy">Your question, code, and selected context go to the selected provider when you ask. Conversations stay in this page.</p>
+    </section>
+  </div>
+  <details class="notes"><summary>Learning notes <span class="small">Optional · saved on this computer</span></summary><p>Save a short note you have reviewed. Enable recall to include relevant notes in later questions.</p><label><input type="checkbox" id="useMemory"> Use my learning notes in tutor questions</label><div class="note-row"><label for="noteText" class="sr-only">Learning note</label><input id="noteText" maxlength="400" placeholder="Example: I confuse leaving a loop with returning from a function."><button id="saveNote" class="quiet">Save note</button></div><p id="noteStatus" class="small" role="status"></p><div id="noteList"></div></details>
+  <details class="details"><summary>What this V1 demonstrates</summary><p>The standalone document combines edited AVP code, bounded execution, four fixed tutoring skills, relevant references, and hosted-model responses.</p><p>The teaching-method index uses local TF-IDF vectors over three draft method cards. MathDial informs probing questions. OATutor informs graduated hints. Algorithm notes provide coding facts.</p><p>This demo runner supports one function, integer values, read-only arrays, scalar assignments, while, if, return, comparisons, +, -, and length. It has execution limits. It does not verify the production AVP interpreter.</p><p>Later versions can add the production visualizer, semantic embeddings, reviewed learning measurements, local-model comparisons, and a self-scaffolding harness.</p><p id="harnessDetails"></p></details>
+  <footer>AVP Tutor · AI integration capstone · V1 meeting demo</footer>
+</main>
+</body></html>
