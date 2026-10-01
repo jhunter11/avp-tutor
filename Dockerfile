@@ -7,6 +7,7 @@ COPY *.py *.g4 ./
 COPY api/ ./api/
 COPY tutor/ ./tutor/
 COPY harness/ ./harness/
+COPY config/ ./config/
 COPY knowledge/ ./knowledge/
 COPY data/ ./data/
 EXPOSE 8000
