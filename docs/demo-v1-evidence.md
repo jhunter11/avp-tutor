@@ -7,7 +7,7 @@ Date: October 1, 2026. Actor: Codex. Environment: Windows, Python 3.14, and the 
 The V1 branch starts from `3726490`, the existing teaching-workflow revision.
 Before V1 changes, all 93 backend tests and Ruff checks passed.
 
-After V1 changes, `uv run pytest -q` exited 0 with 111 passing tests.
+After the core V1 changes, `uv run pytest -q` exited 0 with 111 passing tests.
 `uv run ruff check .` exited 0.
 `node --check demo_v1/web/app.js` exited 0.
 
@@ -31,15 +31,36 @@ An infinite loop reaches the execution limit and reports a readable error.
 At a 390-pixel mobile viewport, the document has no horizontal overflow.
 The temporary viewport override was reset after the check.
 
-## Provider verification checkpoint
+## Combined startup and provider verification
 
-Live OpenRouter verification belongs to the coordinated provider/startup workstream.
-This checkpoint does not claim a completed live answer or a current Gemini result.
-The demo's mocked answer test confirms provider-neutral metadata and the selected fixed skill.
+The canonical checkout includes the coordinated provider/startup commit and the container configuration fix.
+Its combined backend suite exited 0 with 134 passing tests. Ruff and JavaScript syntax checks also exited 0.
+
+`python demo.py doctor --json` confirmed the Windows prerequisites and the configured OpenRouter profile.
+`python demo.py up --port 8771 --json` started the owned server and verified its root document.
+A later call reused that same server with the same runtime fingerprint.
+The selected model is `stealth/space-bunny-alpha`. Fallback is empty, and the free-only guard is enabled.
+No credential value appears in the startup output.
+
+The final canonical browser submitted a hint question with Enter and cleared the question field.
+The live response took 6.5 seconds and named line 7, return `-1`, and index `0`.
+It asked which later indices the program never checks. It did not print a corrected program.
+
+The attached context identifies Your input, code hash prefix `c5033943c4b9`, and harness fingerprint `580a760c9b57`.
+The displayed references include the linear-search notes, MathDial probing card, and OATutor graduated-hint card.
+Up recalled the submitted question. Down restored the empty draft.
+
+Two earlier browser requests in the combined worktree also returned useful answers.
+The hint took 4.0 seconds. A debugging follow-up took 5.9 seconds.
+The follow-up identified the premature return, explained index progress, and suggested matching and absent-input checks.
+An older running process omitted the new attached-case field. Restarting the final runtime resolved that mismatch.
+
+These are selected development observations. They are not an instructor-reviewed benchmark or a learning-impact score.
+Gemini remains a selectable provider. This session did not test live Gemini inference.
 
 ## Evidence limits
 
 The new runner supports a small AVP subset. It does not prove conformance with the production interpreter.
 The method cards are draft coding adaptations. They have no instructor-reviewed quality or learning-impact scores.
-The existing frontend and production services have no changes in this V1 commit.
-Later provider and startup commits require combined verification.
+V1 remains a separate document. The production visualizer adapter remains future work.
+The coordinated publication workstream owns GitHub CI and the final pull request.

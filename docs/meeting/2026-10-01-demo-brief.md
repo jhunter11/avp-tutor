@@ -9,6 +9,7 @@ The team still owns product integration and approval of later milestones.
 Then I built a small tutor harness around the student question, code, and execution evidence.
 For V1, I chose an API model to test the tutoring interaction.
 We can do that without hosting or training a local model.
+I already knew the Gemini API setup from CSC 434.
 
 This demo uses OpenRouter. The provider configuration also supports Gemini for a later comparison.
 V1 uses fixed teaching instructions, and this document runs separately from the product frontend."
