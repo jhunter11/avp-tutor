@@ -1,15 +1,25 @@
-"""Bounded chat providers. Local inference is the default; cloud fallback is opt-in."""
+"""Bounded text-chat adapters selected through provider profiles."""
 
 import os
 import re
 import sys
+import time
 from dataclasses import dataclass
-from threading import BoundedSemaphore
+from decimal import Decimal, InvalidOperation
+from threading import BoundedSemaphore, Lock
 from typing import Callable
 
 import anthropic
 import httpx
 import openai
+
+from llm_config import (
+    ConfigurationError,
+    configured,
+    credential,
+    provider_name,
+    resolve_profile,
+)
 
 
 class ProviderError(RuntimeError):
@@ -35,35 +45,44 @@ def strip_thinking(text: str) -> str:
 
 
 def get_provider_name() -> str:
-    return os.environ.get("LLM_PROVIDER", "ollama").lower()
+    return provider_name()
 
 
 def provider_model(provider: str | None = None) -> str:
-    name = provider or get_provider_name()
-    defaults = {
-        "ollama": "qwen3:8b",
-        "vllm": "local-model",
-        "anthropic": "",
-        "openai": "",
-        "gemini": "",
-    }
-    return os.environ.get(f"{name.upper()}_MODEL", defaults.get(name, ""))
+    try:
+        return resolve_profile(provider).model
+    except ConfigurationError:
+        return ""
 
 
 def is_provider_configured() -> bool:
-    name = get_provider_name()
-    if name == "ollama":
-        return bool(provider_model(name))
-    if name == "vllm":
-        return bool(os.environ.get("VLLM_BASE_URL") and provider_model(name))
-    if name == "gemini":
-        return bool(
-            (os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY"))
-            and provider_model(name)
-        )
-    if name in {"anthropic", "openai"}:
-        return bool(os.environ.get(f"{name.upper()}_API_KEY") and provider_model(name))
-    return False
+    try:
+        return configured(resolve_profile())
+    except ConfigurationError:
+        return False
+
+
+_PRICE_LOCK = Lock()
+_FREE_MODELS = {}
+
+
+def _require_free_openrouter(model):
+    with _PRICE_LOCK:
+        if _FREE_MODELS.get(model, 0) > time.monotonic():
+            return
+        try:
+            response = httpx.get("https://openrouter.ai/api/v1/models", timeout=20)
+            response.raise_for_status()
+            entry = next((m for m in response.json()["data"] if m["id"] == model), None)
+            prices = entry["pricing"] if entry else {}
+            if (not prices or any(Decimal(str(prices[k])) != 0 for k in ("prompt", "completion"))
+                    or any(Decimal(str(v)) != 0 for k, v in prices.items() if k in {"request", "image", "audio", "input_audio"})):
+                raise ProviderError("The selected OpenRouter model is not cataloged with zero prices.")
+        except ProviderError:
+            raise
+        except (httpx.HTTPError, KeyError, TypeError, ValueError, InvalidOperation) as error:
+            raise ProviderError("Cannot verify zero OpenRouter prices. No model request was sent.") from error
+        _FREE_MODELS[model] = time.monotonic() + 300
 
 
 def _limits():
@@ -74,13 +93,17 @@ def _limits():
 
 def _chat_provider(name: str, messages: list[dict]) -> Completion:
     timeout, max_tokens = _limits()
-    model = provider_model(name)
+    try:
+        profile = resolve_profile(name)
+    except ConfigurationError as error:
+        raise ProviderError(str(error)) from None
+    model = profile.model
     if not model:
         raise ProviderError(
             f"Set {name.upper()}_MODEL to a model available in your account."
         )
-    if name == "ollama":
-        base = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434").rstrip("/")
+    if profile.adapter == "ollama":
+        base = profile.base_url.rstrip("/")
         with httpx.Client(timeout=timeout) as client:
             response = client.post(
                 f"{base}/api/chat",
@@ -106,11 +129,11 @@ def _chat_provider(name: str, messages: list[dict]) -> Completion:
             data.get("eval_count"),
             data.get("done_reason") == "length",
         )
-    elif name == "anthropic":
-        key = os.environ.get("ANTHROPIC_API_KEY")
+    elif profile.adapter == "anthropic":
+        key = credential(profile)
         if not key:
             raise ProviderError("ANTHROPIC_API_KEY is not set.")
-        client = anthropic.Anthropic(api_key=key, timeout=timeout, max_retries=0)
+        client = anthropic.Anthropic(api_key=key, base_url=profile.base_url, timeout=timeout, max_retries=0)
         try:
             response = client.messages.create(
                 model=model,
@@ -134,32 +157,26 @@ def _chat_provider(name: str, messages: list[dict]) -> Completion:
             )
         finally:
             client.close()
-    elif name in {"vllm", "openai", "gemini"}:
-        key = os.environ.get(
-            f"{name.upper()}_API_KEY", "local" if name == "vllm" else ""
-        )
-        if name == "gemini":
-            key = os.environ.get("GEMINI_API_KEY") or os.environ.get(
-                "GOOGLE_API_KEY", ""
-            )
-        if not key:
-            raise ProviderError(f"{name.upper()}_API_KEY is not set.")
-        base = os.environ.get(
-            f"{name.upper()}_BASE_URL",
-            "http://localhost:8001/v1"
-            if name == "vllm"
-            else "https://api.openai.com/v1",
-        )
-        if name == "gemini":
-            base = "https://generativelanguage.googleapis.com/v1beta/openai/"
+    elif profile.adapter in {"openai-compatible", "openrouter"}:
+        key = credential(profile)
+        if not key and profile.require_key:
+            raise ProviderError(f"{profile.api_key_env} is not set.")
+        key = key or "local"
+        free_only = os.environ.get("OPENROUTER_FREE_ONLY", "true").lower() != "false"
+        if profile.adapter == "openrouter" and free_only:
+            _require_free_openrouter(model)
+        base = profile.base_url
         client = openai.OpenAI(
             base_url=base, api_key=key, timeout=timeout, max_retries=0
         )
         try:
             kwargs = {"model": model, "messages": messages}
-            kwargs[
-                "max_tokens" if name in {"vllm", "gemini"} else "max_completion_tokens"
-            ] = max_tokens
+            kwargs[profile.token_parameter] = max_tokens
+            if profile.adapter == "openrouter":
+                routing = {"allow_fallbacks": False}
+                if free_only:
+                    routing["max_price"] = {"prompt": 0, "completion": 0, "request": 0, "image": 0, "audio": 0}
+                kwargs["extra_body"] = {"provider": routing}
             # Model-specific sampling extensions are deliberately not sent to all servers.
             response = client.chat.completions.create(**kwargs)
             usage = response.usage
@@ -175,7 +192,7 @@ def _chat_provider(name: str, messages: list[dict]) -> Completion:
             client.close()
     else:
         raise ProviderError(
-            "Unknown LLM_PROVIDER; use ollama, gemini, openai, anthropic, or vllm."
+            "Unknown provider adapter."
         )
     result.answer = strip_thinking(result.answer)
     if not result.answer:
@@ -191,7 +208,7 @@ def _dispatch_chat(messages: list[dict]) -> Completion:
     try:
         return _chat_provider(primary, messages)
     except Exception as exc:
-        if fallback in _PROVIDER_FN_NAMES and fallback != primary:
+        if _known_provider(fallback) and fallback != primary:
             try:
                 result = _chat_provider(fallback, messages)
                 result.fallback_used = True
@@ -226,17 +243,39 @@ def _call_gemini(prompt: str) -> str:
     return _chat_provider("gemini", [{"role": "user", "content": prompt}]).answer
 
 
+def _call_openrouter(prompt: str) -> str:
+    return _chat_provider("openrouter", [{"role": "user", "content": prompt}]).answer
+
+
+def _call_compatible(prompt: str) -> str:
+    return _chat_provider("compatible", [{"role": "user", "content": prompt}]).answer
+
+
+def _known_provider(name):
+    if not name:
+        return False
+    try:
+        resolve_profile(name)
+        return True
+    except ConfigurationError:
+        return False
+
+
 _PROVIDER_FN_NAMES = {
     "gemini": "_call_gemini",
     "anthropic": "_call_anthropic",
     "vllm": "_call_vllm",
     "ollama": "_call_ollama",
     "openai": "_call_openai",
+    "openrouter": "_call_openrouter",
+    "compatible": "_call_compatible",
 }
 
 
 def _get_provider_fn(name: str) -> Callable[[str], str]:
     if name not in _PROVIDER_FN_NAMES:
+        if _known_provider(name):
+            return lambda prompt: _chat_provider(name, [{"role": "user", "content": prompt}]).answer
         raise ProviderError("Unknown LLM_PROVIDER.")
     return getattr(sys.modules[__name__], _PROVIDER_FN_NAMES[name])
 
@@ -247,7 +286,7 @@ def _dispatch_llm(prompt: str) -> str:
     try:
         return _get_provider_fn(provider)(prompt)
     except Exception:
-        if fallback in _PROVIDER_FN_NAMES and fallback != provider:
+        if _known_provider(fallback) and fallback != provider:
             return _get_provider_fn(fallback)(prompt)
         raise
 

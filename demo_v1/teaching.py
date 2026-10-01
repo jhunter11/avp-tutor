@@ -10,7 +10,7 @@ PACK = json.loads((ROOT / "teaching.json").read_text(encoding="utf-8"))
 def choose(request, case):
     question = request.question.lower()
     scores = [
-        (sum(term in question for term in card["question_terms"]), card)
+        (sum(len(term.split()) for term in card["question_terms"] if term in question), card)
         for card in PACK
     ]
     candidates = [

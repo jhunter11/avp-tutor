@@ -1,5 +1,6 @@
 const $ = id => document.getElementById(id);
 let state, trace, caseIndex = 0, step = 0, history = [], busy = false, runRevision = "";
+let submittedQuestions = [], questionCursor = 0, questionDraft = "";
 const el = (tag, text, cls) => { const n = document.createElement(tag); if (text !== undefined) n.textContent = text; if (cls) n.className = cls; return n; };
 function status(id, text, error = false) { $(id).textContent = text; $(id).classList.toggle("error", error); }
 async function api(path, body, method = "POST", retry = true) {
@@ -54,18 +55,26 @@ function addMessage(role,text,response) {
 async function ask(event) {
   event.preventDefault(); if(busy)return;
   const question=$("question").value.trim();if(!question){status("askStatus","Write a question first.",true);return;}
+  submittedQuestions.push(question);submittedQuestions=submittedQuestions.slice(-10);questionCursor=submittedQuestions.length;questionDraft="";$("question").value="";
   busy=true;$("ask").disabled=true;$("ask").textContent="Asking tutor…";status("askStatus","Preparing the code, trace, and references…");
   try {
     if(!trace || revision()!==runRevision) if(!await runCode())throw new Error("Fix the input before asking the tutor.");
     const request={...input(),question,mode:$("mode").value,history:boundedHistory(),case_index:caseIndex,step:trace.cases[caseIndex].frames.length?step:null,include_problem:$("includeProblem").checked,use_memory:$("useMemory").checked};
     const response=await api("ask",request);
-    addMessage("user",question);history.push({role:"user",content:question});addMessage("assistant",response.answer,response);history.push({role:"assistant",content:response.answer.slice(0,4000)});history=history.slice(-8);$("question").value="";status("askStatus","Answer received. Edit the solution or ask a follow-up.");
-  }catch(error){status("askStatus",error.message,true);}
+    addMessage("user",question);history.push({role:"user",content:question});addMessage("assistant",response.answer,response);history.push({role:"assistant",content:response.answer.slice(0,4000)});history=history.slice(-8);status("askStatus","Answer received. Edit the solution or ask a follow-up.");
+  }catch(error){if(!$("question").value)$("question").value=question;status("askStatus",error.message,true);}
   finally{busy=false;$("ask").disabled=false;$("ask").textContent="Ask tutor";}
 }
 async function loadNotes() {const notes=await api("notes",undefined,"GET");$("noteList").replaceChildren();for(const note of notes){const row=el("div",undefined,"note-item"),button=el("button","Delete","quiet");row.append(el("span",note.text),button);button.addEventListener("click",async()=>{try{await api(`notes/${note.id}`,undefined,"DELETE");await loadNotes();status("noteStatus","Note deleted.");}catch(error){status("noteStatus",error.message,true);}});$("noteList").append(row);}}
 async function reset() { if(busy)return;$("code").value=state.problem.buggy_code;$("values").value=state.problem.values.join(", ");$("target").value=state.problem.target;$("includeProblem").checked=true;$("useMemory").checked=false;history=[];$("conversation").replaceChildren(el("p","Ask for a hint about the failing case.","welcome"));$("question").value="";$("mode").value="hint";status("askStatus","");await runCode(); }
 $("run").addEventListener("click",runCode);$("askForm").addEventListener("submit",ask);$("reset").addEventListener("click",reset);
+$("question").addEventListener("keydown",event=>{
+  if(event.isComposing)return;
+  if(event.key==="Enter"&&!event.shiftKey){event.preventDefault();if(!busy)$("askForm").requestSubmit();}
+  else if(event.key==="ArrowUp"&&submittedQuestions.length){event.preventDefault();if(questionCursor===submittedQuestions.length)questionDraft=event.target.value;questionCursor=Math.max(0,questionCursor-1);event.target.value=submittedQuestions[questionCursor];}
+  else if(event.key==="ArrowDown"&&questionCursor<submittedQuestions.length){event.preventDefault();questionCursor++;event.target.value=questionCursor===submittedQuestions.length?questionDraft:submittedQuestions[questionCursor];}
+});
+$("question").addEventListener("input",()=>{questionCursor=submittedQuestions.length;});
 $("prev").addEventListener("click",()=>{step--;renderTrace();});$("next").addEventListener("click",()=>{step++;renderTrace();});
 for(const id of ["code","values","target"])$(id).addEventListener("input",markChanged);
 for(const [id,key] of [["loadBuggy","buggy_code"],["loadCorrect","correct_code"]])$(id).addEventListener("click",()=>{$("code").value=state.problem[key];markChanged();});
