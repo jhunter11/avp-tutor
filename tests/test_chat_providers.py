@@ -1,4 +1,5 @@
 import json
+from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
 import httpx
@@ -56,6 +57,73 @@ def test_openai_keeps_system_and_history(monkeypatch):
     assert sent["messages"] == messages
     assert "extra_body" not in sent
     assert result.provider == "openai"
+
+
+def test_chat_preserves_reasoning_and_cached_usage_counts(monkeypatch):
+    monkeypatch.setenv("LLM_PROVIDER", "openai")
+    monkeypatch.setenv("OPENAI_API_KEY", "test")
+    monkeypatch.setenv("OPENAI_MODEL", "test-model")
+    response = SimpleNamespace(
+        choices=[
+            SimpleNamespace(
+                message=SimpleNamespace(content="One clue."), finish_reason="stop"
+            )
+        ],
+        usage=SimpleNamespace(
+            prompt_tokens=2500,
+            completion_tokens=300,
+            completion_tokens_details=SimpleNamespace(reasoning_tokens=280),
+            prompt_tokens_details=SimpleNamespace(cached_tokens=1000),
+        ),
+    )
+    with patch("providers.openai.OpenAI") as cls:
+        cls.return_value.chat.completions.create.return_value = response
+        result = call_chat([{"role": "user", "content": "Why?"}])
+    assert result.input_tokens == 2500 and result.output_tokens == 300
+    assert result.reasoning_tokens == 280 and result.cached_input_tokens == 1000
+
+
+def test_missing_usage_details_are_unknown_not_zero(monkeypatch):
+    monkeypatch.setenv("LLM_PROVIDER", "openai")
+    monkeypatch.setenv("OPENAI_API_KEY", "test")
+    monkeypatch.setenv("OPENAI_MODEL", "test-model")
+    response = SimpleNamespace(
+        choices=[
+            SimpleNamespace(
+                message=SimpleNamespace(content="One clue."), finish_reason="stop"
+            )
+        ],
+        usage=SimpleNamespace(prompt_tokens=2500, completion_tokens=300),
+    )
+    with patch("providers.openai.OpenAI") as cls:
+        cls.return_value.chat.completions.create.return_value = response
+        result = call_chat([{"role": "user", "content": "Why?"}])
+    assert result.reasoning_tokens is None and result.cached_input_tokens is None
+
+
+def test_separate_reasoning_text_is_counted_without_exposing_it(monkeypatch):
+    monkeypatch.setenv("LLM_PROVIDER", "openai")
+    monkeypatch.setenv("OPENAI_API_KEY", "test")
+    monkeypatch.setenv("OPENAI_MODEL", "test-model")
+    private_text = "synthetic hidden reasoning fixture"
+    response = SimpleNamespace(
+        choices=[
+            SimpleNamespace(
+                message=SimpleNamespace(content="One clue.", reasoning=private_text),
+                finish_reason="stop",
+            )
+        ],
+        usage=SimpleNamespace(
+            prompt_tokens=2500,
+            completion_tokens=300,
+            completion_tokens_details=SimpleNamespace(reasoning_tokens=0),
+        ),
+    )
+    with patch("providers.openai.OpenAI") as cls:
+        cls.return_value.chat.completions.create.return_value = response
+        result = call_chat([{"role": "user", "content": "Why?"}])
+    assert result.reasoning_characters == len(private_text)
+    assert private_text not in str(result)
 
 
 def test_unknown_provider_fails_explicitly(monkeypatch):

@@ -35,6 +35,14 @@ class Completion:
     output_tokens: int | None = None
     truncated: bool = False
     fallback_used: bool = False
+    reasoning_tokens: int | None = None
+    cached_input_tokens: int | None = None
+    reasoning_characters: int | None = None
+
+
+def usage_detail(usage, group, name):
+    value = getattr(getattr(usage, group, None), name, None)
+    return value if type(value) is int and value >= 0 else None
 
 
 def strip_thinking(text: str) -> str:
@@ -188,6 +196,15 @@ def _chat_provider(name: str, messages: list[dict]) -> Completion:
                 usage.completion_tokens if usage else None,
                 response.choices[0].finish_reason == "length",
             )
+            result.reasoning_tokens = usage_detail(
+                usage, "completion_tokens_details", "reasoning_tokens"
+            )
+            result.cached_input_tokens = usage_detail(
+                usage, "prompt_tokens_details", "cached_tokens"
+            )
+            reasoning = getattr(response.choices[0].message, "reasoning", None)
+            if isinstance(reasoning, str):
+                result.reasoning_characters = len(reasoning)
         finally:
             client.close()
     else:

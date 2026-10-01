@@ -32,7 +32,10 @@ def test_fixed_harness_exact_draft_and_actual_test_results_reach_model():
     assert payload["demo_run"]["observations"][0]["expected"] == 1
     assert payload["teaching_plan"]["candidate_confusions"][0]["id"] == "early-return"
     assert facts and methods and notes == []
-    assert {m["id"] for m in methods} == {"method:probe-misconception", "method:graduated-hints"}
+    assert {m["id"] for m in methods} == {
+        "method:probe-misconception",
+        "method:graduated-hints",
+    }
     assert run["passed"] == 4
     assert "Do not show the corrected program" in messages[0]["content"]
 
@@ -63,6 +66,27 @@ def test_provider_neutral_answer_reports_actual_provider_and_fixed_versions():
     assert result["execution"]["passed"] == 4
     assert len(result["prompt_sha256"]) == 64
     assert result["memory_used"] == []
+
+
+def test_demo_flags_inconsistent_reasoning_split_without_returning_private_text():
+    with patch(
+        "demo_v1.service.call_chat",
+        return_value=Completion(
+            "One clue.",
+            "openrouter",
+            "fixture-model",
+            2500,
+            300,
+            reasoning_tokens=0,
+            cached_input_tokens=1000,
+            reasoning_characters=900,
+        ),
+    ):
+        result = answer(request())
+    assert result["input_tokens"] == 2500 and result["output_tokens"] == 300
+    assert result["cached_input_tokens"] == 1000
+    assert result["reasoning_split_available"] is False
+    assert "reasoning_characters" not in result
 
 
 @pytest.mark.parametrize(
@@ -167,7 +191,10 @@ def test_demo_api_isolated_and_local_mutations_require_session(monkeypatch, tmp_
             ).status_code
             == 200
         )
-        assert client.post("/api/feedback", headers=headers, json={}).status_code in {404, 405}
+        assert client.post("/api/feedback", headers=headers, json={}).status_code in {
+            404,
+            405,
+        }
         assert (
             client.post(
                 "/demo/api/notes", headers=headers, content="x" * 70000

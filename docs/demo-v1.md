@@ -70,6 +70,9 @@ The runner records actual condition array reads and return scope to support boun
 When the problem description is absent, retrieval excludes the exercise contract and the tutor asks about intended output.
 
 Read [the configuration checks](demo-teaching-checks.md) and [the live review](teaching-config-review-2026-10-01.md) before presenting.
+Each answer shows provider-reported input and output token counts.
+The page marks an unavailable reasoning split and shows cached input counts when the provider reports them.
+See [the token measurements](token-measurements-2026-10-01.md) and [the conservative API estimate](avp-api-budget-2026-10-01.md).
 
 ## Retrieval and teaching data
 

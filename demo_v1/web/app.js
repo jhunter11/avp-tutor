@@ -46,9 +46,18 @@ async function runCode() {
   finally{$("run").disabled=false;}
 }
 function boundedHistory() { const turns=history.slice(-8); while(turns.reduce((n,t)=>n+t.content.length,0)>10000) turns.splice(0,2); return turns; }
+function tokenUsage(response) {
+  const count = value => Number.isInteger(value) && value >= 0 ? value.toLocaleString() : "not reported";
+  let text = `Tokens: ${count(response.input_tokens)} in · ${count(response.output_tokens)} out`;
+  if (response.reasoning_split_available) text += ` (${count(response.reasoning_tokens)} reasoning tokens included)`;
+  else text += " (reasoning token split unavailable)";
+  if (Number.isInteger(response.cached_input_tokens) && response.cached_input_tokens > 0) text += ` · ${count(response.cached_input_tokens)} input tokens cached`;
+  return text;
+}
 function addMessage(role,text,response) {
   if(!history.length) $("conversation").replaceChildren();
   const item=el("article",undefined,`message ${role}`);item.append(el("div",role==="user"?"You":"AVP Tutor","message-label"),el("div",text,"message-text"));
+  if(response) item.append(el("p",tokenUsage(response),"meta"));
   if(response){item.append(el("p",`${response.model} · ${(response.latency_ms/1000).toFixed(1)}s · ${response.skill.replace(".md","")}`,"meta"));const details=el("details"),summary=el("summary","References and attached context");details.append(summary,el("p",`Execution: ${response.execution.engine}\nAttached case: ${response.execution.selected_case}\nCode: ${response.execution.code_sha256.slice(0,12)}\nFixed harness: ${response.harness_version}`));const plan=response.teaching_plan;details.append(el("p",`Question: ${plan.question}\nHelp requested: ${plan.intent}\nQuestion focus: ${plan.question_focus}\nSelection basis: ${plan.selection_basis}\nExplanation method: ${plan.explanation_method}`));for(const c of plan.candidate_confusions)details.append(el("p",`Possible confusion: ${c.title}\nEffect on the solution: ${c.impact}`));details.append(el("p",`Runner observations:\n${plan.observations.join("\n")}`),el("p",plan.evidence.limits),el("p",plan.limits));for(const source of response.sources)details.append(el("p",`[${source.id}] ${source.text}`));for(const method of response.methods)details.append(el("p",`[${method.id}] ${method.title}\n${method.basis}\n${method.status}`));details.append(el("p",`Method retrieval: local TF-IDF vectors\nLearning notes recalled: ${response.memory_used.length}`));for(const note of response.memory_used)details.append(el("p",note.text));item.append(details);for(const warning of response.warnings)item.append(el("p",warning,"small error"));}
   $("conversation").append(item);$("conversation").scrollTop=$("conversation").scrollHeight;
 }
