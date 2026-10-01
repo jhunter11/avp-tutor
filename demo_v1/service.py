@@ -100,7 +100,13 @@ def prepare(request, memory=None):
     facts = retrieve_notes(
         request.question + " return loop index", "linear_search", k=CONFIG.retrieval_k
     )
-    methods = retrieve_methods(request.question + " " + request.mode)
+    method_query = {
+        "hint": "probe misconception reasoning guiding question hint",
+        "debug": "correction control flow mistake explanation",
+        "explain": "explanation observed code example",
+        "predict": "different input predict transfer check",
+    }[request.mode]
+    methods = retrieve_methods(request.question + " " + method_query)
     notes = (
         (memory or LearnerMemory()).recall(request.question)
         if request.use_memory
@@ -191,6 +197,8 @@ def answer(request):
             "code_sha256": run["code_sha256"],
             "passed": run["passed"],
             "total": run["total"],
+            "selected_case": run["cases"][request.case_index]["name"],
+            "step": request.step,
         },
         "warnings": warnings,
     }

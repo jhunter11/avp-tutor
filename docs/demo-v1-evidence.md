@@ -26,6 +26,11 @@ Loading and running the corrected draft changes the custom output to `1` and the
 The trace shows the matching return at line 5 with `i = 1`.
 These are observations from the actual bounded runner, separate from model output.
 
+Previous-step controls change the recorded line and condition result.
+An infinite loop reaches the execution limit and reports a readable error.
+At a 390-pixel mobile viewport, the document has no horizontal overflow.
+The temporary viewport override was reset after the check.
+
 ## Provider verification checkpoint
 
 Live OpenRouter verification belongs to the coordinated provider/startup workstream.

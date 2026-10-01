@@ -1,6 +1,7 @@
 """Bounded AVP teaching subset. No eval, host execution, I/O, or model execution."""
 
 import hashlib
+import json
 import operator
 
 from antlr4 import CommonTokenStream, InputStream
@@ -31,6 +32,9 @@ class Runtime:
         self.values = values.copy()
         self.target = target
         self.digest = hashlib.sha256(code.encode()).hexdigest()
+        self.run_digest = hashlib.sha256(
+            json.dumps([self.digest, values, target]).encode()
+        ).hexdigest()[:12]
 
     def tick(self):
         self.operations += 1
@@ -56,7 +60,7 @@ class Runtime:
                 code=self.code,
                 current_line=line,
                 phase="after",
-                run_id=f"demo-{self.digest[:12]}",
+                run_id=f"demo-{self.run_digest}",
                 step=len(self.frames),
                 variables={
                     k: v for k, v in self.env.items() if not isinstance(v, list)

@@ -32,6 +32,7 @@ def test_fixed_harness_exact_draft_and_actual_test_results_reach_model():
     assert payload["demo_run"]["observations"][0]["expected"] == 1
     assert payload["teaching_plan"]["candidate_confusions"][0]["id"] == "early-return"
     assert facts and methods and notes == []
+    assert {m["id"] for m in methods} == {"method:probe-misconception", "method:graduated-hints"}
     assert run["passed"] == 4
     assert "Do not show the corrected program" in messages[0]["content"]
 
