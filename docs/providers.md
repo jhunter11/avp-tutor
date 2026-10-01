@@ -70,3 +70,12 @@ Run `doctor --json` for configuration checks and `verify-model --json` for one l
 Unit tests cover Gemini routing, provider extensions, missing keys, and free-only routing.
 The development machine verified live OpenRouter inference.
 Gemini has configuration tests but no live check because no Gemini key is configured.
+
+## Output limits
+
+`LLM_MAX_TOKENS` controls the requested output budget. The default remains 700, with a maximum of 4096.
+The page shows a warning when the provider reports a truncated answer.
+For a larger budget, set `LLM_MAX_TOKENS=1600` in the local environment file and restart.
+Selected demo rechecks completed at that setting after an earlier truncated response.
+Those observations do not establish a reliability rate or prove that the budget change caused the improvement.
+Provider failures can still occur. Keep the failure and truncation warnings visible during a demo.

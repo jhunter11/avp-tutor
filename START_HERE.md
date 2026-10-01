@@ -64,7 +64,7 @@ The flawed program passes four of six fixed cases. The corrected program passes 
 Use Explain, Debug, or Predict to change the teaching method.
 The page shows source cards and the exact execution context attached to an answer.
 
-The demo has four fixed teaching skills and seven confusion cards.
+The demo has four fixed teaching skills and eight confusion cards.
 It retrieves short local facts and teaching methods without a vector database.
 See [the teaching checks](docs/demo-teaching-checks.md) and [provider configuration](docs/providers.md).
 See [the V1 guide](docs/demo-v1.md) for execution limits and learner-note controls.
