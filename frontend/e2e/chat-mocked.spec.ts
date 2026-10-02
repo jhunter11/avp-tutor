@@ -174,3 +174,31 @@ test("stopping a request recovers input and does not add an answer", async ({
   await expect(page.getByRole("alert")).toContainText("Request stopped");
   await expect(page.locator(".message.assistant")).toHaveCount(0);
 });
+
+test("strategy is sent and preparation is disclosed", async ({ page }) => {
+  let sent: any;
+  await page.route("**/api/tutor", (route) => {
+    sent = route.request().postDataJSON();
+    return route.fulfill({
+      json: {
+        ...reply,
+        teaching_decision: {
+          action: "explain",
+          strategy: "analogy",
+          reasons: ["Explicit student preference"],
+          policy_version: "teaching-policy-v1",
+        },
+        evidence: { status: "not_checked" },
+        code_examples: [],
+      },
+    });
+  });
+  await page.getByLabel("Explanation strategy").selectOption("analogy");
+  await page.getByRole("button", { name: /Explain this step/ }).click();
+  await page.getByText("How this answer was prepared").click();
+  expect(sent.strategy).toBe("analogy");
+  await expect(page.getByText("Explicit student preference")).toBeVisible();
+  await expect(
+    page.getByText(/No independent execution or answer verification/),
+  ).toBeVisible();
+});

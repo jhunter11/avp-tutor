@@ -178,6 +178,17 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AnswerChecks */
+        AnswerChecks: {
+            /**
+             * Factual Accuracy Verified
+             * @default false
+             * @constant
+             */
+            factual_accuracy_verified: false;
+            /** Unknown Citations */
+            unknown_citations?: string[];
+        };
         /** ChatTurn */
         ChatTurn: {
             /** Content */
@@ -187,6 +198,36 @@ export interface components {
              * @enum {string}
              */
             role: "user" | "assistant";
+        };
+        /** CodeExample */
+        CodeExample: {
+            /** Algorithm */
+            algorithm: string;
+            /** Code */
+            code: string;
+            /** Code Sha256 */
+            code_sha256: string;
+            /**
+             * Execution Verified
+             * @default false
+             * @constant
+             */
+            execution_verified: false;
+            /** Id */
+            id: string;
+            /** Path */
+            path: string;
+            /**
+             * Relationship
+             * @default Same algorithm label; implementation equivalence has not been verified.
+             */
+            relationship: string;
+            /**
+             * Syntax Valid
+             * @default true
+             * @constant
+             */
+            syntax_valid: true;
         };
         /** Diagnostic */
         Diagnostic: {
@@ -208,6 +249,34 @@ export interface components {
              */
             severity: "error" | "warning";
         };
+        /** EvidenceReport */
+        EvidenceReport: {
+            /** Checks */
+            checks?: string[];
+            /** Code Sha256 */
+            code_sha256?: string | null;
+            /**
+             * Code Version
+             * @default
+             */
+            code_version: string;
+            /** Conflicts */
+            conflicts?: string[];
+            /**
+             * Execution Verified
+             * @default false
+             * @constant
+             */
+            execution_verified: false;
+            /** Limitations */
+            limitations?: string[];
+            /**
+             * Status
+             * @default not_checked
+             * @enum {string}
+             */
+            status: "not_checked" | "consistent" | "conflict";
+        };
         /** ExecutionContext */
         ExecutionContext: {
             /**
@@ -224,6 +293,11 @@ export interface components {
              * @default
              */
             code: string;
+            /**
+             * Code Version
+             * @default
+             */
+            code_version: string;
             /** Current Line */
             current_line?: number | null;
             /**
@@ -398,6 +472,26 @@ export interface components {
             /** Title */
             title: string;
         };
+        /** TeachingDecision */
+        TeachingDecision: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "explain" | "hint" | "predict" | "debug" | "clarify";
+            /**
+             * Policy Version
+             * @default teaching-policy-v1
+             */
+            policy_version: string;
+            /** Reasons */
+            reasons: string[];
+            /**
+             * Strategy
+             * @enum {string}
+             */
+            strategy: "auto" | "trace" | "analogy" | "comparison" | "invariant" | "worked-example" | "guided-question";
+        };
         /** TutorRequest */
         TutorRequest: {
             context?: components["schemas"]["ExecutionContext"] | null;
@@ -422,16 +516,26 @@ export interface components {
             mode: "explain" | "hint" | "predict" | "debug";
             /** Question */
             question: string;
+            /**
+             * Strategy
+             * @default auto
+             * @enum {string}
+             */
+            strategy: "auto" | "trace" | "analogy" | "comparison" | "invariant" | "worked-example" | "guided-question";
         };
         /** TutorResponse */
         TutorResponse: {
             /** Answer */
             answer: string;
+            answer_checks?: components["schemas"]["AnswerChecks"];
+            /** Code Examples */
+            code_examples?: components["schemas"]["CodeExample"][];
             /**
              * Context Status
              * @enum {string}
              */
             context_status: "provided" | "partial" | "missing";
+            evidence?: components["schemas"]["EvidenceReport"];
             /**
              * Fallback Used
              * @default false
@@ -454,6 +558,11 @@ export interface components {
             model: string;
             /** Output Tokens */
             output_tokens?: number | null;
+            /**
+             * Prompt Sha256
+             * @default
+             */
+            prompt_sha256: string;
             /** Prompt Version */
             prompt_version: string;
             /** Provider */
@@ -465,6 +574,7 @@ export interface components {
             skill: string;
             /** Sources */
             sources?: components["schemas"]["Source"][];
+            teaching_decision?: components["schemas"]["TeachingDecision"] | null;
             /** Warnings */
             warnings?: string[];
         };

@@ -53,3 +53,9 @@ Handle 422 (invalid request), 429 (rate limited), and 503 (provider unavailable/
 The bundled grammar differs from the written reference in whitespace handling and nested functions. `/api/validate` reports grammar syntax success separately from documented semantic/style diagnostics and always returns `execution_verified=false`. It is not a complete scope/type/bounds checker. Run interpreter conformance tests before declaring this parser compatible with a production AVP runtime.
 
 The insertion-sort demo is a deterministic Python reference trace whose displayed AVP has the same algorithm structure. It is not a general AVP interpreter and does not implement visualization annotations. Replace its snapshots with your actual interpreter events at the integration boundary.
+
+## Workflow metadata and strategy
+
+Requests optionally accept `strategy`: `auto` (default), `trace`, `analogy`, `comparison`, `invariant`, `worked-example`, or `guided-question`, and `context.code_version`. Responses add `teaching_decision`, `evidence`, `code_examples`, `answer_checks`, and `prompt_sha256`; existing request fields remain compatible. Generated OpenAPI and TypeScript definitions specify the full contract.
+
+Structured copy/shift checking requires the latest event's `line` to match `current_line`, with snapshot `phase: after`. Supply synchronized events and state. Event `details` uses `source_index`, `destination_index`, `copied_value`, and optional `array_name`; multiple arrays require an explicit name. `saved_key` compares to variable `key` when both exist. These checks only compare supplied fields and cannot establish execution correctness. See [the runnable workflow](workflow.md).

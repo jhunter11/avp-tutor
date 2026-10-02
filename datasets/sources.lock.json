@@ -1,0 +1,613 @@
+{
+  "version": 1,
+  "retrieved_on": "2026-09-23",
+  "sources": [
+    {
+      "id": "mathdial",
+      "repository": "https://github.com/eth-nlped/mathdial",
+      "revision": "b06c020a0a1f57a87577fec33e657b63e7eb476e",
+      "license": "CC-BY-SA-4.0",
+      "scope": "Full published train/test JSONL; teacher dialogue with simulated students",
+      "runtime_enabled": false,
+      "training_approved": false,
+      "files": [
+        {
+          "path": "mathdial/README.md",
+          "url": "https://raw.githubusercontent.com/eth-nlped/mathdial/b06c020a0a1f57a87577fec33e657b63e7eb476e/README.md",
+          "sha256": "50430d327d94453c02a9c21d831fac2bfb73aa8a261d4c669cf2b335651ec227",
+          "bytes": 6213
+        },
+        {
+          "path": "mathdial/data/train.jsonl",
+          "url": "https://raw.githubusercontent.com/eth-nlped/mathdial/b06c020a0a1f57a87577fec33e657b63e7eb476e/data/train.jsonl",
+          "sha256": "d6135869c02dccf8d14756fa2f0367c5352922bb263ec22dc0eeace4da815d43",
+          "bytes": 7181555
+        },
+        {
+          "path": "mathdial/data/test.jsonl",
+          "url": "https://raw.githubusercontent.com/eth-nlped/mathdial/b06c020a0a1f57a87577fec33e657b63e7eb476e/data/test.jsonl",
+          "sha256": "3ec54ee8ab921dc6191bf5e2ee766d4e7916b4264394eb17a6be9b3fe486e50b",
+          "bytes": 1858054
+        }
+      ]
+    },
+    {
+      "id": "oatutor",
+      "repository": "https://github.com/CAHLR/OATutor-Content",
+      "revision": "76022325118ec18dcde58059b67d91db2a5319e4",
+      "license": "CC-BY-4.0",
+      "scope": "25 lexicographically selected problem bundles, all JSON files within each; not representative or full corpus",
+      "runtime_enabled": false,
+      "training_approved": false,
+      "files": [
+        {
+          "path": "oatutor/README.md",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/README.md",
+          "sha256": "4e81744e6acfd90cb6799027e6803e60b004f363d59df86227d0db60a251b87c",
+          "bytes": 3091
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real1/a005bd5real1.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real1/a005bd5real1.json",
+          "sha256": "0835bcbfa91423d0452144bbd80e23ac237353a17b725bd4b9b425dafd5ed4cb",
+          "bytes": 420
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real1/steps/a005bd5real1a/a005bd5real1a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real1/steps/a005bd5real1a/a005bd5real1a.json",
+          "sha256": "095360320b889a4d8f1c4ee0e198dddd1af1d06de9395fc65e5d0cebee326250",
+          "bytes": 319
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real1/steps/a005bd5real1a/tutoring/a005bd5real1aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real1/steps/a005bd5real1a/tutoring/a005bd5real1aDefaultPathway.json",
+          "sha256": "d28b3092f5bb4dddf3b52d81b62c16a33db5e3c7a4c69b36e1ab5dec0d7b62e9",
+          "bytes": 279
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real10/a005bd5real10.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real10/a005bd5real10.json",
+          "sha256": "1e2cc15bca240efedd9913f9b9c200d9742d0f665e3cdf95deac3428a53eb77b",
+          "bytes": 537
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real10/steps/a005bd5real10a/a005bd5real10a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real10/steps/a005bd5real10a/a005bd5real10a.json",
+          "sha256": "8ca34ecc406d3960258142a67bbb44d8263bfdb1d1b724c511579bcfb9c8dd47",
+          "bytes": 395
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real10/steps/a005bd5real10a/tutoring/a005bd5real10aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real10/steps/a005bd5real10a/tutoring/a005bd5real10aDefaultPathway.json",
+          "sha256": "a3d3d359e49cd79ec96a240644c9c32456cb4159ad58a3691d64a294aea6a735",
+          "bytes": 1544
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real11/a005bd5real11.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real11/a005bd5real11.json",
+          "sha256": "8439b31e7a02f3b8587b0a811a84788ba6d401fcc2bbe94d329f93dcef16d5d4",
+          "bytes": 458
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real11/steps/a005bd5real11a/a005bd5real11a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real11/steps/a005bd5real11a/a005bd5real11a.json",
+          "sha256": "59b50e81b53672561f84595248f0de24de2dfd36bb1bd84dff76369ad02fc815",
+          "bytes": 257
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real11/steps/a005bd5real11a/tutoring/a005bd5real11aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real11/steps/a005bd5real11a/tutoring/a005bd5real11aDefaultPathway.json",
+          "sha256": "77aeea09a5c28773313bf0e05a4e4a8c7b53f2bffd7e9d94ad2237ebe6531686",
+          "bytes": 1044
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real12/a005bd5real12.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real12/a005bd5real12.json",
+          "sha256": "5b43ceef0a5936b70898be908cf993d9d126cc51c1ee12120c436120bf495371",
+          "bytes": 522
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real12/steps/a005bd5real12a/a005bd5real12a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real12/steps/a005bd5real12a/a005bd5real12a.json",
+          "sha256": "9a47f0394628f2a8735c5d609973926ec0e5e40c6a1005ee063a6d0c01790cee",
+          "bytes": 299
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real12/steps/a005bd5real12a/tutoring/a005bd5real12aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real12/steps/a005bd5real12a/tutoring/a005bd5real12aDefaultPathway.json",
+          "sha256": "c44ef7d8d1168fe3125c349e302887aee3cf61a9fa217f6d640a370fb8765a38",
+          "bytes": 1112
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real13/a005bd5real13.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real13/a005bd5real13.json",
+          "sha256": "4b4033391ab306965dcaed88536df53a89b79698a566bc54173e8315c09dc9ab",
+          "bytes": 548
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real13/steps/a005bd5real13a/a005bd5real13a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real13/steps/a005bd5real13a/a005bd5real13a.json",
+          "sha256": "23d406ec415fea264e097550e288b073377b70b3c6b8af7b54fbaf501b034352",
+          "bytes": 269
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real13/steps/a005bd5real13a/tutoring/a005bd5real13aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real13/steps/a005bd5real13a/tutoring/a005bd5real13aDefaultPathway.json",
+          "sha256": "ab646244caaab44206d58dcd33466b73f712ccae3bf09100847b9253626c6a1d",
+          "bytes": 3571
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real14/a005bd5real14.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real14/a005bd5real14.json",
+          "sha256": "d29f7a0ffcd8a9a73080f04c0b787faad65540789cec7e5090b1521e0fd627ae",
+          "bytes": 406
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real14/steps/a005bd5real14a/a005bd5real14a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real14/steps/a005bd5real14a/a005bd5real14a.json",
+          "sha256": "8c87e0feeb35ade15ea0d28cd57dfed567cc564844d220e3759566834486cd8a",
+          "bytes": 605
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real14/steps/a005bd5real14a/tutoring/a005bd5real14aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real14/steps/a005bd5real14a/tutoring/a005bd5real14aDefaultPathway.json",
+          "sha256": "d587e94c1913a3e20e97a6ff1238348342620f89d58564e82cba6a7918ee2058",
+          "bytes": 1978
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real15/a005bd5real15.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real15/a005bd5real15.json",
+          "sha256": "85b45b06268613993ba5122d64c6bd165a2e47054c39e911d7e4493748f92037",
+          "bytes": 398
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real15/steps/a005bd5real15a/a005bd5real15a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real15/steps/a005bd5real15a/a005bd5real15a.json",
+          "sha256": "ab1bd17c966a69c0fe4f86b4e9e32a91ebd341d30d217f1a3f4f6a11123d1474",
+          "bytes": 753
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real15/steps/a005bd5real15a/tutoring/a005bd5real15aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real15/steps/a005bd5real15a/tutoring/a005bd5real15aDefaultPathway.json",
+          "sha256": "79214a971404969f0ace050daed37fe59901e90da7798802b43a7622dbff7692",
+          "bytes": 2554
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real17/a005bd5real17.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real17/a005bd5real17.json",
+          "sha256": "a650a84402b7e01fa46d022c279b08c7104ed47a29c8834ecee6a890b32f9c77",
+          "bytes": 402
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real17/steps/a005bd5real17a/a005bd5real17a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real17/steps/a005bd5real17a/a005bd5real17a.json",
+          "sha256": "03f20cc2d94cf75c21459e91f039a3ea308086cf06b3486681c680d87fea910e",
+          "bytes": 489
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real17/steps/a005bd5real17a/tutoring/a005bd5real17aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real17/steps/a005bd5real17a/tutoring/a005bd5real17aDefaultPathway.json",
+          "sha256": "84f17514818be41bb3da2b698bd851899661c5eab0ba182089815db9b66dd9f9",
+          "bytes": 1779
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real18/a005bd5real18.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real18/a005bd5real18.json",
+          "sha256": "634808266038ea424ef50c82b9ed4fb6fca8a59d7c58a7f2e53e25fdb175cbd8",
+          "bytes": 404
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real18/steps/a005bd5real18a/a005bd5real18a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real18/steps/a005bd5real18a/a005bd5real18a.json",
+          "sha256": "1e74c9ece7166e5cb2ff9668b88ba1f61f9addbb474804ec1e0983be8a2496ed",
+          "bytes": 801
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real18/steps/a005bd5real18a/tutoring/a005bd5real18aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real18/steps/a005bd5real18a/tutoring/a005bd5real18aDefaultPathway.json",
+          "sha256": "64f707ec47d96059e61a1c906814b12580441382ef3e73c32e5a0c884f3a00a3",
+          "bytes": 684
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real19/a005bd5real19.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real19/a005bd5real19.json",
+          "sha256": "975759b487f8b5db379d843ce639fb9cccde1e8d4600868f2e234ec422ad24f0",
+          "bytes": 405
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real19/steps/a005bd5real19a/a005bd5real19a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real19/steps/a005bd5real19a/a005bd5real19a.json",
+          "sha256": "76c31d6c0e206fc35a8297647051d1ab2e14c73146a6894229e792d73738d64e",
+          "bytes": 608
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real19/steps/a005bd5real19a/tutoring/a005bd5real19aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real19/steps/a005bd5real19a/tutoring/a005bd5real19aDefaultPathway.json",
+          "sha256": "0e0b68a5361a2ed2b2c4badfd61265d6af64481906d56d668a21240d26cbb1a4",
+          "bytes": 996
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real2/a005bd5real2.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real2/a005bd5real2.json",
+          "sha256": "a5aaa08d57a919562a3ba8a883f43f4f6bc3e25d56cbb59a824d3087e7529e95",
+          "bytes": 441
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real2/steps/a005bd5real2a/a005bd5real2a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real2/steps/a005bd5real2a/a005bd5real2a.json",
+          "sha256": "90af1ce66c89fd3501951ec4b1788630e273cfe6c7651f424fd5bd4c193f8a08",
+          "bytes": 291
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real2/steps/a005bd5real2a/tutoring/a005bd5real2aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real2/steps/a005bd5real2a/tutoring/a005bd5real2aDefaultPathway.json",
+          "sha256": "0dc7f3b0fd3d54a31650ffbc11509b45aaf2a5556e8c88ffe70195d19267e2d0",
+          "bytes": 1582
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real2/steps/a005bd5real2b/a005bd5real2b.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real2/steps/a005bd5real2b/a005bd5real2b.json",
+          "sha256": "88fc0b7b18e1fa1b9bc459f1ae9a821772db9d83d0595248e79bd42973a3a0b9",
+          "bytes": 297
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real2/steps/a005bd5real2b/tutoring/a005bd5real2bDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real2/steps/a005bd5real2b/tutoring/a005bd5real2bDefaultPathway.json",
+          "sha256": "211e61c3e1e3ac9be5283ca25afc8efc3a4dce73f2f3aba857caf3e145e347d5",
+          "bytes": 2061
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real2/steps/a005bd5real2c/a005bd5real2c.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real2/steps/a005bd5real2c/a005bd5real2c.json",
+          "sha256": "276aff63fa37d4e8367cf13a999b72a4c8772b082a1df175da0495b50778a4c9",
+          "bytes": 314
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real2/steps/a005bd5real2c/tutoring/a005bd5real2cDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real2/steps/a005bd5real2c/tutoring/a005bd5real2cDefaultPathway.json",
+          "sha256": "707a99b3f6ed43618e3537d00fb99db02c1d148ae4008da3dbeceabe63cb52fa",
+          "bytes": 2289
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real2/steps/a005bd5real2d/a005bd5real2d.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real2/steps/a005bd5real2d/a005bd5real2d.json",
+          "sha256": "6b3f95d8ad5a561397027805f5cab9c5111b01e0630cbc9652c4543fc438146b",
+          "bytes": 334
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real2/steps/a005bd5real2d/tutoring/a005bd5real2dDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real2/steps/a005bd5real2d/tutoring/a005bd5real2dDefaultPathway.json",
+          "sha256": "e516228944bf66a1067d5c4d4d9a51b77ce63964fae2ecd97d4d3a3ac86396fd",
+          "bytes": 1358
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real20/a005bd5real20.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real20/a005bd5real20.json",
+          "sha256": "e4a965cbca6d31c4aadf9bf64da896e2d7843d7b3d4ac2f1b617e21a9ccc2c8e",
+          "bytes": 420
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real20/steps/a005bd5real20a/a005bd5real20a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real20/steps/a005bd5real20a/a005bd5real20a.json",
+          "sha256": "e3e7baddc24ab4724b40c06e8d0d40209e35143a1159d5c396e89f06deeceff5",
+          "bytes": 813
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real20/steps/a005bd5real20a/tutoring/a005bd5real20aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real20/steps/a005bd5real20a/tutoring/a005bd5real20aDefaultPathway.json",
+          "sha256": "a7f2cf08e7ccba37c7982f938e329574ef21c2d8964b66ba836cf87056316055",
+          "bytes": 1384
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real21/a005bd5real21.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real21/a005bd5real21.json",
+          "sha256": "1953267c7206833facd08a2a205ddc36336109008d0b74668fa30fbe72a75fbf",
+          "bytes": 420
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real21/steps/a005bd5real21a/a005bd5real21a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real21/steps/a005bd5real21a/a005bd5real21a.json",
+          "sha256": "21227da771cf5b597c504df71cd9723db2da9cf276138a66bbd7043bbbc74df6",
+          "bytes": 388
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real21/steps/a005bd5real21a/tutoring/a005bd5real21aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real21/steps/a005bd5real21a/tutoring/a005bd5real21aDefaultPathway.json",
+          "sha256": "3fa77e9965c07d105f1b19a401d710b7643b604635a0bb16ba757cfb17064b9b",
+          "bytes": 1288
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real23/a005bd5real23.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real23/a005bd5real23.json",
+          "sha256": "177ddeda122e47614cc7f66cd76285138401efac4d9dac8d5c87adccb1ef478d",
+          "bytes": 425
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real23/steps/a005bd5real23a/a005bd5real23a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real23/steps/a005bd5real23a/a005bd5real23a.json",
+          "sha256": "ba650513d083d84ddf59be074b758c82c979300e8fb3c4743c0aecabb34c3185",
+          "bytes": 290
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real23/steps/a005bd5real23a/tutoring/a005bd5real23aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real23/steps/a005bd5real23a/tutoring/a005bd5real23aDefaultPathway.json",
+          "sha256": "553a4ccdeb38fc89d9f91fe471dcdc45f26c4c0e7d67b2406635ff7d75f0b5ac",
+          "bytes": 576
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real24/a005bd5real24.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real24/a005bd5real24.json",
+          "sha256": "f8afe9dd77967598c59d20c024387fec309c088cd421b652a02ac806c121e7cd",
+          "bytes": 410
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real24/steps/a005bd5real24a/a005bd5real24a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real24/steps/a005bd5real24a/a005bd5real24a.json",
+          "sha256": "f2c594a20ba8f1c389ff1034befccab2540ee5ec4564e697ee2ad66a15ed28f2",
+          "bytes": 533
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real24/steps/a005bd5real24a/tutoring/a005bd5real24aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real24/steps/a005bd5real24a/tutoring/a005bd5real24aDefaultPathway.json",
+          "sha256": "0a0fe6101350f18fb161d4a042c0478bdc8ebac00cd793d6f0a4ea622c150260",
+          "bytes": 757
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real25/a005bd5real25.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real25/a005bd5real25.json",
+          "sha256": "39bf3ae0be4702a2adfdd6b0d1c2a56e42f6a8aa974886d81c70f02c5171e720",
+          "bytes": 410
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real25/steps/a005bd5real25a/a005bd5real25a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real25/steps/a005bd5real25a/a005bd5real25a.json",
+          "sha256": "8d23aad7c8af84f79c3b17a21e05641479e1496e5a089f9cb1d603b203f333eb",
+          "bytes": 709
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real25/steps/a005bd5real25a/tutoring/a005bd5real25aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real25/steps/a005bd5real25a/tutoring/a005bd5real25aDefaultPathway.json",
+          "sha256": "09be84490282001774fa49ae8e1c15caf931afe330f2fecb8bd1250cff422795",
+          "bytes": 698
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real26/a005bd5real26.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real26/a005bd5real26.json",
+          "sha256": "b229e1a4be300d19d306dcf9e09cf12c9beba7f5e651af900001847787754650",
+          "bytes": 412
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real26/steps/a005bd5real26a/a005bd5real26a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real26/steps/a005bd5real26a/a005bd5real26a.json",
+          "sha256": "c1cef966f618ec6a09f8afef9e5e9d0af30e123eb96e8c0db70674c9090b8e62",
+          "bytes": 682
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real26/steps/a005bd5real26a/tutoring/a005bd5real26aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real26/steps/a005bd5real26a/tutoring/a005bd5real26aDefaultPathway.json",
+          "sha256": "758a39de16307dcd9773a5247a65d672f8c8299117fa47bb7d5f1a048abd65a7",
+          "bytes": 335
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real27/a005bd5real27.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real27/a005bd5real27.json",
+          "sha256": "8ad539bb0b114032ce0e2b3f97f96dfbfd938a5695d02ee7252be0fe4c79a79f",
+          "bytes": 465
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real27/steps/a005bd5real27a/a005bd5real27a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real27/steps/a005bd5real27a/a005bd5real27a.json",
+          "sha256": "ae072aaa23035ea491aeb1580c1e20394ec4baa28a9c9941f36d7dee247a9a8a",
+          "bytes": 267
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real27/steps/a005bd5real27a/tutoring/a005bd5real27aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real27/steps/a005bd5real27a/tutoring/a005bd5real27aDefaultPathway.json",
+          "sha256": "d9f9ee7dca8f12b826e94c86f41ad5184e300c4cf6cea03ca2a25e8395aee6dd",
+          "bytes": 593
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real3/a005bd5real3.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real3/a005bd5real3.json",
+          "sha256": "2131a5b713c4f04a8e95bdb98f14293f3df14f6243a19b63002b555ded25be46",
+          "bytes": 466
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real3/steps/a005bd5real3a/a005bd5real3a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real3/steps/a005bd5real3a/a005bd5real3a.json",
+          "sha256": "d60c9af498c213f199acbb7b031987f3da4fb3ee9a6b34663feed4e8b2261a72",
+          "bytes": 297
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real3/steps/a005bd5real3a/tutoring/a005bd5real3aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real3/steps/a005bd5real3a/tutoring/a005bd5real3aDefaultPathway.json",
+          "sha256": "278ae2d4722615a74db235f315316841c90e98d4235ef2c368bbebf3aa0f571c",
+          "bytes": 1880
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real5/a005bd5real5.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real5/a005bd5real5.json",
+          "sha256": "ed0a5682464b99b14ce92e86e4f6ef4d4055a833e48f343c236cbc8ca258323c",
+          "bytes": 456
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real5/steps/a005bd5real5a/a005bd5real5a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real5/steps/a005bd5real5a/a005bd5real5a.json",
+          "sha256": "ae017d6a6cae0631583b7610cd2035bc9a693a9c7eaf94fa1133c68efc6c4ebc",
+          "bytes": 358
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real5/steps/a005bd5real5a/tutoring/a005bd5real5aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real5/steps/a005bd5real5a/tutoring/a005bd5real5aDefaultPathway.json",
+          "sha256": "c25701bffcfb3b371d23b58e57658cdb92b01845cd9c9ab98d9234698e974020",
+          "bytes": 1371
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real6/a005bd5real6.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real6/a005bd5real6.json",
+          "sha256": "4f8ef854c25580464f65c7ff6589a5fd0b7ed04c3d26201515f40c7fc7c051ae",
+          "bytes": 476
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real6/steps/a005bd5real6a/a005bd5real6a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real6/steps/a005bd5real6a/a005bd5real6a.json",
+          "sha256": "afa1163462d4477467cca833197e9af2d9685830f43dda841ea15e35b93c18ae",
+          "bytes": 430
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real6/steps/a005bd5real6a/tutoring/a005bd5real6aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real6/steps/a005bd5real6a/tutoring/a005bd5real6aDefaultPathway.json",
+          "sha256": "a259aa174b29ee8a60b22facb16530f070fcf976b1c29d4e4bae10077df6c97d",
+          "bytes": 1635
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real8/a005bd5real8.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real8/a005bd5real8.json",
+          "sha256": "3e493ebe0731a90195743518566d8c9f77706d5d4479b8f2d364bea62adf0883",
+          "bytes": 521
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real8/steps/a005bd5real8a/a005bd5real8a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real8/steps/a005bd5real8a/a005bd5real8a.json",
+          "sha256": "66768e8e004d8e8174539f7f33215c0b7f9b7db5bdeede5852a4668c9f1eeb1a",
+          "bytes": 279
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real8/steps/a005bd5real8a/tutoring/a005bd5real8aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real8/steps/a005bd5real8a/tutoring/a005bd5real8aDefaultPathway.json",
+          "sha256": "01a2894e765c6aaccefd32ac36de57d41f2723ec111484ece73428059d93605f",
+          "bytes": 2225
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real9/a005bd5real9.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real9/a005bd5real9.json",
+          "sha256": "d7bb96f9cf8db09de0cdad2f37957b4d26843927fe0920037ff18720b2fee2b4",
+          "bytes": 564
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real9/steps/a005bd5real9a/a005bd5real9a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real9/steps/a005bd5real9a/a005bd5real9a.json",
+          "sha256": "ea04c4d29ed6b706a1472a5dfb8cc61bb9d739dbaf6be52afc9cbc29a4ae9812",
+          "bytes": 241
+        },
+        {
+          "path": "oatutor/content-pool/a005bd5real9/steps/a005bd5real9a/tutoring/a005bd5real9aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a005bd5real9/steps/a005bd5real9a/tutoring/a005bd5real9aDefaultPathway.json",
+          "sha256": "6a43c0685602a804f0a01112545aa673602d46c766f5747d5613b462d984870c",
+          "bytes": 991
+        },
+        {
+          "path": "oatutor/content-pool/a0098c7realnumbers1/a0098c7realnumbers1.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a0098c7realnumbers1/a0098c7realnumbers1.json",
+          "sha256": "056a2f574dabbc73d2f336e0ab18aa478cee8db6acdea6bf9c66938be003fb0e",
+          "bytes": 488
+        },
+        {
+          "path": "oatutor/content-pool/a0098c7realnumbers1/steps/a0098c7realnumbers1a/a0098c7realnumbers1a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a0098c7realnumbers1/steps/a0098c7realnumbers1a/a0098c7realnumbers1a.json",
+          "sha256": "3d5aaaa4e83446a0dd7ccbd0d12ee4a486a4628711deaf17cdfc851dd40b02f4",
+          "bytes": 251
+        },
+        {
+          "path": "oatutor/content-pool/a0098c7realnumbers1/steps/a0098c7realnumbers1a/tutoring/a0098c7realnumbers1aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a0098c7realnumbers1/steps/a0098c7realnumbers1a/tutoring/a0098c7realnumbers1aDefaultPathway.json",
+          "sha256": "282459904f5fa96f27ee2641bbab56b8019a1e7a082150916cedc64d035e773d",
+          "bytes": 1217
+        },
+        {
+          "path": "oatutor/content-pool/a0098c7realnumbers1/steps/a0098c7realnumbers1b/a0098c7realnumbers1b.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a0098c7realnumbers1/steps/a0098c7realnumbers1b/a0098c7realnumbers1b.json",
+          "sha256": "14d3347a7ca6354700334aa9a8a221d376a35aac6171b4355bb86c556c76accc",
+          "bytes": 254
+        },
+        {
+          "path": "oatutor/content-pool/a0098c7realnumbers1/steps/a0098c7realnumbers1b/tutoring/a0098c7realnumbers1bDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a0098c7realnumbers1/steps/a0098c7realnumbers1b/tutoring/a0098c7realnumbers1bDefaultPathway.json",
+          "sha256": "68374b41b01fe1fbeef3a504b50a34a4e7ab6addb12eb929cb6755e2e80dfe14",
+          "bytes": 1221
+        },
+        {
+          "path": "oatutor/content-pool/a0098c7realnumbers10/a0098c7realnumbers10.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a0098c7realnumbers10/a0098c7realnumbers10.json",
+          "sha256": "d957eff41b5a12b9ac7ef2215a96c2ac9177d3932e201194e810fb33e3651ecd",
+          "bytes": 489
+        },
+        {
+          "path": "oatutor/content-pool/a0098c7realnumbers10/steps/a0098c7realnumbers10a/a0098c7realnumbers10a.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a0098c7realnumbers10/steps/a0098c7realnumbers10a/a0098c7realnumbers10a.json",
+          "sha256": "ba1c654c3607a44ac388a314f031e6407e2bc04ba9a4187220aae4315e1dcff2",
+          "bytes": 252
+        },
+        {
+          "path": "oatutor/content-pool/a0098c7realnumbers10/steps/a0098c7realnumbers10a/tutoring/a0098c7realnumbers10aDefaultPathway.json",
+          "url": "https://raw.githubusercontent.com/CAHLR/OATutor-Content/76022325118ec18dcde58059b67d91db2a5319e4/content-pool/a0098c7realnumbers10/steps/a0098c7realnumbers10a/tutoring/a0098c7realnumbers10aDefaultPathway.json",
+          "sha256": "5f04801f0607022617fedd83a70af73f76dd4507e043c2f5b738a2ca245fcc5c",
+          "bytes": 1222
+        }
+      ]
+    },
+    {
+      "id": "mrbench",
+      "repository": "https://github.com/kaushal0494/UnifyingAITutorEvaluation",
+      "revision": "bbef521ddb875f2cc8a5ee798f4066965a7cfd8a",
+      "license": "CC-BY-SA-4.0",
+      "scope": "MRBench V2 evaluation data and annotation guideline",
+      "runtime_enabled": false,
+      "training_approved": false,
+      "files": [
+        {
+          "path": "mrbench/README.md",
+          "url": "https://raw.githubusercontent.com/kaushal0494/UnifyingAITutorEvaluation/bbef521ddb875f2cc8a5ee798f4066965a7cfd8a/README.md",
+          "sha256": "a3c3e49bc364b37eefcb71d47352a96e76608970276bd57970e9b7ed1ef9249f",
+          "bytes": 9525
+        },
+        {
+          "path": "mrbench/MRBench/MRBench_V2.json",
+          "url": "https://raw.githubusercontent.com/kaushal0494/UnifyingAITutorEvaluation/bbef521ddb875f2cc8a5ee798f4066965a7cfd8a/MRBench/MRBench_V2.json",
+          "sha256": "a8792225075533d15c23e1c903d0c649f19708ee93f5c3d8267eaa6ab623aac1",
+          "bytes": 1426725
+        },
+        {
+          "path": "mrbench/Human_Annotation_Guidelines_Resources/Pedagogical_Ability_Assessment_Human_Evaluation_Guideline.pdf",
+          "url": "https://raw.githubusercontent.com/kaushal0494/UnifyingAITutorEvaluation/bbef521ddb875f2cc8a5ee798f4066965a7cfd8a/Human_Annotation_Guidelines_Resources/Pedagogical_Ability_Assessment_Human_Evaluation_Guideline.pdf",
+          "sha256": "a335a589a0681d237eda7c68579a3b54c7763b8592ac1205928c2bcf96e465c3",
+          "bytes": 327078
+        }
+      ]
+    },
+    {
+      "id": "csedm",
+      "repository": "https://github.com/thomaswp/CSEDM2019-Data-Challenge",
+      "revision": "6e7a1f6463d6343bd0c063fdeacf9cf9147e5073",
+      "license": "See DataShop dataset terms",
+      "scope": "Documentation only; interaction archive requires DataShop account",
+      "runtime_enabled": false,
+      "training_approved": false,
+      "files": [
+        {
+          "path": "csedm/README.md",
+          "url": "https://raw.githubusercontent.com/thomaswp/CSEDM2019-Data-Challenge/6e7a1f6463d6343bd0c063fdeacf9cf9147e5073/README.md",
+          "sha256": "1df91907d94fff4c400c22fb0545a57ed61b04c8ead3e35a484f66475b03150e",
+          "bytes": 20470
+        }
+      ]
+    },
+    {
+      "id": "ednet",
+      "repository": "https://github.com/riiid/ednet",
+      "revision": "27db572eeaf4455a1f6c029ba27e34f78bb49d73",
+      "license": "CC-BY-NC-4.0",
+      "scope": "Documentation only; full interaction archives deferred due to scale and separate research use",
+      "runtime_enabled": false,
+      "training_approved": false,
+      "files": [
+        {
+          "path": "ednet/README.md",
+          "url": "https://raw.githubusercontent.com/riiid/ednet/27db572eeaf4455a1f6c029ba27e34f78bb49d73/README.md",
+          "sha256": "4230e5fbcc5bda373f315d9cbb4a9eb55e9088225fd1aa5d91b3f628359f923b",
+          "bytes": 24298
+        }
+      ]
+    }
+  ]
+}

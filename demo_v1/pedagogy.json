@@ -1,0 +1,35 @@
+[
+  {
+    "id": "method:probe-misconception",
+    "title": "Probe the student's reasoning",
+    "section": "A guiding question about the observed mistake",
+    "text": "For a hint or a misconception, ask one concrete question about the student's current reasoning. Use the failing input and the exact return or condition. Give the student room to identify the mismatch before showing a correction.",
+    "path": "demo_v1/pedagogy.json",
+    "basis": "MathDial train record qid=5000012, scenario=1. Teacher turns carry probing labels and address a described confusion.",
+    "source_url": "https://github.com/eth-nlped/mathdial/tree/b06c020a0a1f57a87577fec33e657b63e7eb476e",
+    "license": "CC-BY-SA-4.0",
+    "status": "Draft coding adaptation. No instructor review or measured transfer benefit."
+  },
+  {
+    "id": "method:graduated-hints",
+    "title": "Give one hint at a time",
+    "section": "Hints before a worked correction",
+    "text": "In hint mode, start with the relevant condition or control flow. When the student asks for more help, make the clue more specific. Explain or debug mode may show a minimal correction. Do not give a full solution as the first hint.",
+    "path": "demo_v1/pedagogy.json",
+    "basis": "OATutor content bundle a0098c7realnumbers10: hint objects carry IDs, types, and dependencies between hints.",
+    "source_url": "https://github.com/CAHLR/OATutor-Content/tree/76022325118ec18dcde58059b67d91db2a5319e4",
+    "license": "CC-BY-4.0",
+    "status": "Draft coding adaptation. No instructor review or measured transfer benefit."
+  },
+  {
+    "id": "method:transfer-check",
+    "title": "Check the idea on another input",
+    "section": "A new case after the explanation",
+    "text": "After an explanation or debug correction, ask the student to predict a different input. An empty array, a target at the last index, or a repeated target can check whether the idea transfers. A passing program does not establish student mastery.",
+    "path": "demo_v1/pedagogy.json",
+    "basis": "Original project design proposal. This card does not derive from a measured dataset outcome.",
+    "source_url": null,
+    "license": "Original project note",
+    "status": "Draft method for later evaluation."
+  }
+]

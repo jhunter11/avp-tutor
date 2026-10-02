@@ -58,6 +58,10 @@ tests/__pycache__/
 .cache/huggingface/
 # Local reports and exported datasets
 artifacts/
+# Local PDF handouts and render previews
+output/pdf/
+tmp/pdfs/
+.runtime/
 .ruff_cache/
 .pytest_cache/
 

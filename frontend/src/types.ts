@@ -1,3 +1,4 @@
+import type { components } from "../../integrations/schema";
 export interface ExecutionEvent {
   kind: string;
   description: string;
@@ -24,6 +25,10 @@ export interface Source {
   text: string;
 }
 export interface TutorReply {
+  evidence?: components["schemas"]["EvidenceReport"];
+  teaching_decision?: components["schemas"]["TeachingDecision"] | null;
+  code_examples?: components["schemas"]["CodeExample"][];
+
   answer: string;
   sources: Source[];
   context_status: string;

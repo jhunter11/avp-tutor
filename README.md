@@ -1,24 +1,30 @@
 # AVP Tutor
 
-An algorithm tutor that explains the execution step a student is watching. Runs with **local Ollama** by default, with explicit Gemini, OpenAI, Anthropic, and vLLM options for comparison.
+An algorithm tutor that explains the execution step a student watches. OpenRouter is the default, with configurable Gemini, OpenAI, Anthropic, Ollama, and compatible servers.
 
-Forked from [huytran088/avp_rag_system](https://github.com/huytran088/avp_rag_system). Original history, grammar, parser, sample algorithms, and optional semantic retrieval are preserved. See [attribution](ATTRIBUTION.md).
+**Demo entry point:** [START_HERE.md](START_HERE.md). Run `python demo.py up --open --json` on Windows, or `python3 demo.py up --open --json` on macOS or Linux.
+The standalone V1 demo needs Python 3.12+ and uv. It includes a first-match question, actual execution traces, and four teaching modes.
+See [provider configuration](docs/providers.md) and [the teaching checks](docs/demo-teaching-checks.md).
 
-The `frontend/` directory is a **temporary test harness only**. Your team's existing/new presentation frontend remains the product UI. Integrate the backend using [the standalone TypeScript client](integrations/tutor-client.ts) and [API contract](docs/integration.md); no React components need to be adopted.
+Forked from [huytran088/avp_rag_system](https://github.com/huytran088/avp_rag_system). The fork preserves original history, grammar, parser, sample algorithms, and optional semantic retrieval. See [attribution](ATTRIBUTION.md).
+
+The `frontend/` directory is a **temporary test harness only**. The team presentation frontend remains the product UI. Integrate the backend with [the standalone TypeScript client](integrations/tutor-client.ts) and [API contract](docs/integration.md). React components are optional.
 
 ## What works
 
 - An interactive insertion-sort workspace: array bars, saved variables, highlighted AVP, previous/next steps, playback, and custom inputs.
 - Explain, hint, prediction-question, and debug modes, with bounded conversation history and explicit before/after execution context.
-- Lightweight teaching-note retrieval with source IDs; no embedding downloads at startup.
+- Lightweight teaching-note retrieval with source IDs. no embedding downloads at startup.
 - A strict integration API for an external visualizer's code, variables, arrays, and recent events.
 - AVP syntax diagnostics, separate from semantic checks and runtime correctness.
 - 19 **unreviewed draft** training interactions, a 50-case development benchmark, grouped dataset export, and a provider-neutral evaluation runner.
 - Retained `/api/generate` and `/api/retrieve` endpoints for upstream integrations. Generation accepts both `query` and legacy `message`.
 
-This repository is a working tutor foundation, **not a trained model or a replacement for the external AVP interpreter**. The demo executes a reference insertion-sort implementation in Python to produce snapshots; arbitrary AVP is never executed. Teaching notes and synthetic targets still need instructor review.
+The standalone V1 demo executes a bounded AVP subset for the first-match question.
+The older insertion-sort test harness uses Python reference snapshots.
+Neither path replaces the full team interpreter. Teaching notes and synthetic targets still need instructor review.
 
-## Run locally
+## Optional integration test harness
 
 Requirements: Python 3.12+, [uv](https://docs.astral.sh/uv/getting-started/installation/), Node 22+, and [Ollama](https://docs.ollama.com/quickstart).
 
@@ -27,6 +33,8 @@ git clone https://github.com/jhunter11/avp-tutor.git
 cd avp-tutor
 cp .env.example .env
 uv sync --frozen
+# Select local inference for this optional harness.
+# In .env, set LLM_PROVIDER=ollama.
 ollama pull qwen3:8b
 # Start `ollama serve` if Ollama is not already running.
 uv run uvicorn api.main:app --host 127.0.0.1 --port 8000
@@ -40,15 +48,21 @@ npm ci
 npm run dev
 ```
 
-Open http://localhost:5173. The model is configurable; `qwen3:8b` is a starting point, not a claim of best tutoring quality for your hardware. The visualization works without model inference, but the backend must be running.
+Open http://localhost:5173. The model is configurable. `qwen3:8b` is a starting point, not a claim of best tutoring quality for your hardware. The visualization works without model inference, but the backend must be running.
+
+## Development plan and public teaching data
+
+See the [Waterfall plan](docs/planning/WATERFALL.md) for implemented versus planned capabilities, requirements, phase gates, acceptance criteria, and release scope. Add ideas to [the notes inbox](docs/planning/NOTES.md). The [change register](docs/planning/CHANGELOG.md) tracks accepted changes.
+
+The [public teaching-data collection](datasets/README.md) includes reproducible, checksum-verified downloads and explicit acquisition limits. It is research material, separate from live RAG and approved AVP training.
 
 ## Skills and harness engineering
 
-Edit teaching skills in `harness/skills/`, retrieval policy in `harness/configs/baseline.json`, and grounded context assembly in `tutor/service.py`. Optional consented feedback links ratings to the exact answer/context and harness version. A candidate proposer can scaffold experiments without modifying the active tutor. See [the harness guide](docs/harness.md). Non-use is recorded separately and never automatically interpreted as a bad answer.
+Edit teaching skills in `harness/skills/`, retrieval policy in `harness/configs/baseline.json`, and grounded context assembly in `tutor/service.py`. Optional consented feedback links ratings to the exact answer/context and harness version. A candidate proposer can scaffold experiments without modifying the active tutor. See [the harness guide](docs/harness.md). The capture system records non-use separately. It never interprets non-use as a bad answer.
 
 ## API comparison
 
-For Google AI Studio, set `LLM_PROVIDER=gemini`, `GEMINI_API_KEY`, and `GEMINI_MODEL` in the local `.env`. The Google key is sent only to Google's documented compatibility endpoint. Select a model available to your key. Do not paste keys into chat or commit them.
+For Google AI Studio, set `LLM_PROVIDER=gemini`, `GEMINI_API_KEY`, and `GEMINI_MODEL` in the local `.env`. The adapter sends the Google key only to the documented Google compatibility endpoint. Select a model available to your key. Do not paste keys into chat or commit them.
 
 Alternatively, set `LLM_PROVIDER=openai` with `OPENAI_API_KEY` and `OPENAI_MODEL`, or `LLM_PROVIDER=anthropic` with `ANTHROPIC_API_KEY` and `ANTHROPIC_MODEL`, in `.env`. Use an exact model ID available in your account. Restart the API after configuration changes. Credentials stay on the backend.
 
@@ -66,7 +80,7 @@ Reports include responses, latency, token usage when available, references, and 
 
 ## Integrate your visualizer
 
-Post to `/api/tutor` with `question`, `mode`, `level`, `history`, and `context`. Provide interpreter-generated snapshots; do not ask the model to reconstruct state. See the [integration contract](docs/integration.md), or open `/docs` on the backend for the generated API schema. The workspace also accepts pasted snapshot JSON.
+Post to `/api/tutor` with `question`, `mode`, `level`, `history`, and `context`. Provide interpreter-generated snapshots. do not ask the model to reconstruct state. See the [integration contract](docs/integration.md), or open `/docs` on the backend for the generated API schema. The workspace also accepts pasted snapshot JSON.
 
 Endpoints:
 
@@ -74,7 +88,7 @@ Endpoints:
 |---|---|
 | `POST /api/tutor` | Grounded tutoring response and supplied teaching references |
 | `POST /api/context/validate` | Validate an integration snapshot without calling a model |
-| `POST /api/validate` | Parse AVP; never execute it |
+| `POST /api/validate` | Parse AVP. never execute it |
 | `GET /api/demo/insertion-sort?values=2,7,9,4` | Deterministic demo snapshots |
 | `GET /api/health` | Configuration/liveness status, not proof the model is reachable |
 | `POST /api/generate` | Legacy code generation plus syntax diagnostics |
@@ -82,7 +96,7 @@ Endpoints:
 
 ## Training preparation
 
-Start with reviewed **question + code/state + tutor answer** interactions. Logical blocks teach steps; whole algorithms support invariants and complexity. The exporter uses the same prompt builder as inference.
+Start with reviewed **question + code/state + tutor answer** interactions. Logical blocks teach steps. whole algorithms support invariants and complexity. The exporter uses the same prompt builder as inference.
 
 ```sh
 uv run python -m training.dataset training/seed_examples.jsonl
@@ -92,7 +106,7 @@ uv run python -m training.dataset training/seed_examples.jsonl --output artifact
 uv run python -m training.dataset training/seed_examples.jsonl --output artifacts/draft-preview --include-drafts
 ```
 
-Read the [training and evaluation guide](docs/training.md) before approving data or training. Conversations are not logged by default or automatically added to training data. Optional feedback capture requires server enablement and per-request consent; see the harness guide.
+Read the [training and evaluation guide](docs/training.md) before approving data or training. Conversations are not logged by default or automatically added to training data. Optional feedback capture requires server enablement and per-request consent. see the harness guide.
 
 ## Verification
 
@@ -107,10 +121,12 @@ npx playwright install chromium
 npm run test:e2e:ci
 ```
 
-Browser CI tests intercept model requests. For real-backend integration tests, start the API on port 18080, then run `E2E_LIVE=1 npm run test:e2e -- --project=live`. Live model observations are documented in [verification notes](docs/verification.md).
+Browser CI tests intercept model requests. For real-backend integration tests, start the API on port 18080, then run `E2E_LIVE=1 npm run test:e2e -- --project=live`. [Verification notes](docs/verification.md) document live model observations.
 
 ## Optional semantic search and deployment
 
-Legacy BGE/FAISS retrieval remains available via `uv sync --extra semantic`, `uv run python ingest.py`, and `RETRIEVAL_BACKEND=semantic`. This downloads additional ML dependencies/models and is not needed by the tutor. Invalid source examples are rejected during ingestion.
+Legacy BGE/FAISS retrieval remains available via `uv sync --extra semantic`, `uv run python ingest.py`, and `RETRIEVAL_BACKEND=semantic`. This downloads additional ML dependencies/models and is not needed by the tutor. Ingestion rejects invalid source examples.
 
-See [deployment](docs/docker-deploy.md). Deployments are opt-in; this fork does not push to the upstream author's servers or Hugging Face Space. The API has no built-in user authentication: keep the default loopback binding for local use, or put authentication at your application's gateway before public deployment.
+See [deployment](docs/docker-deploy.md). Deployments are opt-in. this fork does not push to the upstream servers or Hugging Face Space. The integration API has no user authentication. Keep the default loopback binding for local use. Add gateway authentication before public deployment.
+
+For a reproducible question-to-answer walkthrough with selectable teaching strategies and evidence metadata, see [the runnable tutor workflow](docs/workflow.md).

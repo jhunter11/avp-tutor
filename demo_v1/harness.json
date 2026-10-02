@@ -1,0 +1,12 @@
+{
+  "name": "avp-v1-meeting-demo",
+  "retrieval_k": 3,
+  "include_prior_question": true,
+  "code_example_k": 0,
+  "skills": {
+    "explain": "demo-first-match-explain.md",
+    "hint": "demo-first-match-hint.md",
+    "predict": "demo-first-match-predict.md",
+    "debug": "demo-first-match-debug.md"
+  }
+}

@@ -7,7 +7,7 @@ from pathlib import Path
 from harness.config import harness_version, load_config
 from tutor.knowledge import knowledge_version
 from tutor.models import TutorRequest
-from tutor.service import PROMPT_VERSION, build_messages, sources_for_request
+from tutor.service import PROMPT_VERSION, prepare_workflow, sources_for_request
 
 
 def main():
@@ -18,7 +18,8 @@ def main():
     request = TutorRequest.model_validate_json(args.request.read_text())
     config = load_config(args.harness)
     sources = sources_for_request(request, config)
-    messages = build_messages(request, sources, config)
+    workflow = prepare_workflow(request, sources, config)
+    messages = workflow.messages
     print(
         json.dumps(
             {
@@ -26,6 +27,10 @@ def main():
                 "prompt_version": PROMPT_VERSION,
                 "knowledge_version": knowledge_version(),
                 "skill": config.skills[request.mode],
+                "teaching_decision": workflow.decision.model_dump(),
+                "evidence": workflow.evidence.model_dump(),
+                "code_example_ids": [e.id for e in workflow.examples],
+                "prompt_sha256": workflow.prompt_sha256,
                 "source_ids": [s.id for s in sources],
                 "prompt_characters": sum(len(m["content"]) for m in messages),
                 "messages": messages,

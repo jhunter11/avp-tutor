@@ -38,6 +38,7 @@ export default function ChatPanel() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [mode, setMode] = useState("explain");
+  const [strategy, setStrategy] = useState("auto");
   const [level, setLevel] = useState("beginner");
   const [loading, setLoading] = useState(false);
   const [traceLoading, setTraceLoading] = useState(false);
@@ -173,6 +174,7 @@ export default function ChatPanel() {
           question: submitted,
           mode,
           level,
+          strategy,
           context: context ?? null,
           history,
         }),
@@ -476,6 +478,28 @@ export default function ChatPanel() {
                   <option value="advanced">Advanced</option>
                 </select>
               </label>
+              <label className="level-label">
+                Strategy
+                <select
+                  aria-label="Explanation strategy"
+                  value={strategy}
+                  onChange={(e) => setStrategy(e.target.value)}
+                >
+                  {[
+                    "auto",
+                    "trace",
+                    "analogy",
+                    "comparison",
+                    "invariant",
+                    "worked-example",
+                    "guided-question",
+                  ].map((value) => (
+                    <option key={value} value={value}>
+                      {value}
+                    </option>
+                  ))}
+                </select>
+              </label>
             </div>
             <div
               className="conversation"
@@ -539,6 +563,27 @@ export default function ChatPanel() {
                           <code>{source.id}</code>
                         </div>
                       ))}
+                    </details>
+                  )}
+                  {message.reply?.teaching_decision && (
+                    <details className="sources">
+                      <summary>How this answer was prepared</summary>
+                      <p>
+                        {message.reply.teaching_decision.action} ·{" "}
+                        {message.reply.teaching_decision.strategy}
+                      </p>
+                      {message.reply.teaching_decision.reasons.map((reason) => (
+                        <p key={reason}>{reason}</p>
+                      ))}
+                      <p>
+                        Supplied-field checks: {message.reply.evidence?.status}.
+                        No independent execution or answer verification.
+                      </p>
+                      <p>
+                        {message.reply.code_examples?.length ?? 0}{" "}
+                        syntax-checked reference examples; implementation
+                        equivalence is unverified.
+                      </p>
                     </details>
                   )}
                   {message.reply && (

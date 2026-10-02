@@ -134,7 +134,7 @@ class TestIsProviderConfigured:
 class TestGetProviderName:
     def test_default(self):
         with patch.dict(os.environ, {}, clear=True):
-            assert get_provider_name() == "ollama"
+            assert get_provider_name() == "openrouter"
 
     def test_explicit(self):
         with patch.dict(os.environ, {"LLM_PROVIDER": "vllm"}):
