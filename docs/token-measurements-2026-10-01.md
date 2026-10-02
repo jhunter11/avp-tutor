@@ -44,6 +44,7 @@ The provider nevertheless reported zero reasoning tokens.
 The final adapter records reasoning length without retaining its text and marks that split unavailable.
 The demo displays reported input/output totals and cached input counts when available.
 Missing counts remain unknown.
+The published guard also marks a split unavailable when reasoning exceeds total output or the total is missing.
 
 The original ten receipts contain a derived `non_reasoning_output_tokens` field.
 Do not interpret that field as visible answer tokens.
@@ -83,12 +84,17 @@ uv run python -m scripts.measure_demo_tokens --live --output artifacts/token-rev
 uv run python -m scripts.measure_demo_tokens --live --case one-image-384
 ```
 
+`--live` sends requests to the configured provider. A future paid-provider configuration can incur charges.
+The recorded measurements used free-only OpenRouter. The offline command sends no model requests.
+
 The script appends dated receipts. Each receipt records configuration names, prompt hashes, image dimensions, byte counts, and image hashes.
 It does not save credentials, image base64, or reasoning text.
 The original local receipts are in `artifacts/token-review-20261001/`, which Git ignores.
 
 The full backend suite exited 0 with 154 passing tests.
 Ruff and JavaScript syntax checks exited 0.
+The later count-validity guard passed 156 backend tests and the 14 original frontend browser tests.
+Its offline runner check made no model calls.
 The final instrumentation recheck reported 2,936 input tokens and 275 output tokens, with an unavailable reasoning split.
 The live browser showed 2,936 input tokens and 319 output tokens, with the same split warning.
 

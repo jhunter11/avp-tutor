@@ -15,6 +15,9 @@ Select an exact model with the profile's model variable or `--model`.
 | compatible | COMPATIBLE_API_KEY, optional | COMPATIBLE_MODEL | OpenAI-compatible chat |
 
 OpenRouter defaults to `stealth/space-bunny-alpha`. Availability and limits can change.
+As checked October 1, 2026, [OpenRouter lists its departure date as October 5, 2026](https://openrouter.ai/stealth/space-bunny-alpha).
+For later use, select an available model with `OPENROUTER_MODEL` or choose another configured provider.
+The demo currently retains Space Bunny Alpha. Model selection does not change automatically.
 Before a completion, the default free-only policy checks the live catalog for zero prices.
 It also sends zero price caps and disables provider fallback within OpenRouter.
 Unknown pricing, catalog failure, and paid models stop the request.

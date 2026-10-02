@@ -89,6 +89,20 @@ def test_demo_flags_inconsistent_reasoning_split_without_returning_private_text(
     assert "reasoning_characters" not in result
 
 
+@pytest.mark.parametrize("output,reasoning", [(300, 301), (None, 20)])
+def test_demo_does_not_claim_reasoning_partition_when_total_is_invalid(output, reasoning):
+    with patch(
+        "demo_v1.service.call_chat",
+        return_value=Completion(
+            "One clue.", "openrouter", "fixture-model", 2500, output,
+            reasoning_tokens=reasoning,
+        ),
+    ):
+        result = answer(request())
+    assert result["reasoning_tokens"] == reasoning
+    assert result["reasoning_split_available"] is False
+
+
 @pytest.mark.parametrize(
     "question,confusion",
     [

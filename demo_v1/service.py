@@ -198,11 +198,7 @@ def answer(request):
         "output_tokens": completion.output_tokens,
         "reasoning_tokens": completion.reasoning_tokens,
         "cached_input_tokens": completion.cached_input_tokens,
-        "reasoning_split_available": completion.reasoning_tokens is not None
-        and not (
-            completion.reasoning_tokens == 0
-            and (completion.reasoning_characters or 0) > 0
-        ),
+        "reasoning_split_available": completion.reasoning_split_available,
         "skill": CONFIG.skills[request.mode],
         "harness_version": harness_version(CONFIG),
         "knowledge_version": knowledge_version(),

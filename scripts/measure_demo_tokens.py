@@ -184,10 +184,7 @@ def main():
                 try:
                     completion = call_chat(messages)
                     record["result"] = asdict(completion)
-                    split_available = completion.reasoning_tokens is not None and not (
-                        completion.reasoning_tokens == 0
-                        and (completion.reasoning_characters or 0) > 0
-                    )
+                    split_available = completion.reasoning_split_available
                     record["reasoning_split_available"] = split_available
                     if (
                         completion.output_tokens is not None

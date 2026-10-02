@@ -39,6 +39,17 @@ class Completion:
     cached_input_tokens: int | None = None
     reasoning_characters: int | None = None
 
+    @property
+    def reasoning_split_available(self):
+        return (
+            type(self.reasoning_tokens) is int
+            and type(self.output_tokens) is int
+            and 0 <= self.reasoning_tokens <= self.output_tokens
+            and not (
+                self.reasoning_tokens == 0 and (self.reasoning_characters or 0) > 0
+            )
+        )
+
 
 def usage_detail(usage, group, name):
     value = getattr(getattr(usage, group, None), name, None)

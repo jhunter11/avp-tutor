@@ -21,6 +21,8 @@ The launcher installs locked dependencies, starts the server, checks the page, a
 Windows also has `Start Demo.cmd`. macOS has `Start Demo.command`. Linux has `./start-demo.sh`.
 
 The default provider is OpenRouter with `stealth/space-bunny-alpha`.
+[OpenRouter lists this preview model as going away October 5, 2026](https://openrouter.ai/stealth/space-bunny-alpha).
+For later demos, set `OPENROUTER_MODEL` to an available model or select another provider.
 The launcher uses an inherited `OPENROUTER_API_KEY` or a local `.env` file.
 Without a key, code execution and trace controls work. Tutor messages require a configured provider.
 
@@ -63,6 +65,7 @@ Run the sample flawed code, inspect the trace, and ask for a hint.
 The flawed program passes four of six fixed cases. The corrected program passes six.
 Use Explain, Debug, or Predict to change the teaching method.
 The page shows source cards and the exact execution context attached to an answer.
+Each answer also shows reported input and output tokens, with optional cache and reasoning details.
 
 The demo has four fixed teaching skills and eight confusion cards.
 It retrieves short local facts and teaching methods without a vector database.
